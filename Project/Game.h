@@ -43,13 +43,16 @@ private:
 	// Game is still running
 	bool mIsRunning;
 	
-	// Pong specific
-	// Direction of paddle
+	// Pong specific Direction of paddle
+	// ex) 0 : not move / -1 : up / 1 : down
 	int mPaddleDir;
+
 	// Position of paddle
 	Vector2 mPaddlePos;
+
 	// Position of ball
 	Vector2 mBallPos;
+
 	// Velocity of ball
 	Vector2 mBallVel;
 };

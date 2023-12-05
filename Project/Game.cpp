@@ -91,12 +91,19 @@ bool Game::Initialize()
 		return false;
 	}
 	
+	// winodw 의 left side
 	mPaddlePos.x = 10.0f;
 	mPaddlePos.y = 768.0f/2.0f;
+
+	// Ball Pos 는 center
 	mBallPos.x = 1024.0f/2.0f;
 	mBallPos.y = 768.0f/2.0f;
+
+	// 200 pixel per second to left
 	mBallVel.x = -200.0f;
+	// 200 pixel per second to up
 	mBallVel.y = 235.0f;
+
 	return true;
 }
 
@@ -163,28 +170,43 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
-	// Compute delta time
-	// Wait until 16ms has elapsed since last frame
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
-		;
+	// Compute delta time, Wait until 16ms has elapsed since last frame
+	/*
+	SDL_GetTicks : delta time 을 계산을 도와주는 함수
+					SDL_INIT 이후 흐른 시간을 리턴한다.
+	*/
+	/*
+	Frame Limiting
+	- 특정 delta time 이 될 때까지 game loop 을 기다리게 한다.
+
+	예를 들어, 60 FPS 이 target frame rate 라고 해보자
+	만약 frame 이 15ms 에서 끝나버리면 frame limiting 은 1.6ms 를 더 기다리게 해서
+	16.6ms target time 을 맞추게 한다.
+
+	아래 함수는, 적어도 프레임 사이에 16ms 가 소요되도록 제한을 거는 것이다.
+	*/
+	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 
 	// Delta time is the difference in ticks from last frame
-	// (converted to seconds)
+	// (1000.f 로 나누는 이유 : converted to seconds)
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 	
-	// Clamp maximum delta time value
+	// Clamp maximum delta time value (최대 delta time 제한)
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
 
 	// Update tick counts (for next frame)
+	// 이전 frame 에서의 SDL_GetTicks() 를 계산하고, 다음 frame 에서의 SDL_GetTicks 값과 비교하여 delta 를 구한다.
 	mTicksCount = SDL_GetTicks();
 	
 	// Update paddle position based on direction
 	if (mPaddleDir != 0)
 	{
 		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
+
+		// 아래 조건들은, screen 범위를 벗어나지 않게 하는 것이다.
 		if (mPaddlePos.y < (paddleH/2.0f + thickness))
 		{
 			mPaddlePos.y = paddleH/2.0f + thickness;
@@ -199,11 +221,22 @@ void Game::UpdateGame()
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime;
 	
-	// Bounce if needed
-	// Did we intrsect with the paddle?
+	// Bounce if needed. Did we intrsect with the paddle?
+	// Paddle.y 과 BallPos.y 사이의 절대값을 구한다.
 	float diff = mPaddlePos.y - mBallPos.y;
+
 	diff = (diff > 0.0f) ? diff : -diff;
-	if (mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && diff <= paddleH/2.0f
+
+	// 첫번째 if 문은 ball 과 paddle 이 충돌한 경우를 고려하는 것이다.
+	if (
+		// Ball 이 정확한 x 위치에 있을 때
+		mBallPos.x <= 25.0f 
+		&& mBallPos.x >= 20.0f 
+		// y 차이가 충분히 작을 때 -> 만약 diff > paddleH/2.0f 라면
+		//							즉, y 값 차이가 paddle 높이의 절반보다 크다면. ball 이 paddle 에 비해
+		//							너무 high 에 있거나 너무 낮게 있다는 의미가 된다.
+		&& diff <= paddleH/2.0f
+		// Ball 이 왼쪽으로 이동
 		&& mBallVel.x < 0.0f)
 	{
 		mBallVel.x *= -1.0f;
@@ -212,22 +245,29 @@ void Game::UpdateGame()
 	// Did the ball go off the screen? (if so, end game)
 	else if (mBallPos.x <= 0.0f)
 	{
-		// mIsRunning = false;
+		// 왼쪽으로 통과해버린다면 ping pong 이 제대로 안되었다는 의미
+		// 이 경우는, 게임을 종료시킨다.
+		mIsRunning = false;
 	}
-	// Did the ball collide with the right wall?
+	// 오른쪽으로 가고 있고, 오른쪽 벽에 충돌했다면
 	else if (mBallPos.x >= (1024.0f - thickness) && mBallVel.x > 0.0f)
 	{
 		mBallVel.x *= -1.0f;
 		mBallPos.x = 1024.0f - thickness;
 	}
 	
-	// Did the ball collide with the top wall?
+	// Did the ball collide with the top wall? 
+	// mBallPos.y <= thickness : 하단 벽을 충돌하고
+	// mBallVel.y < 0.0f       : 아래로 가고 있다면
 	if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
 	{
+		// 위 아래 속도 및 방향을 다르게 한다.
 		mBallVel.y *= -1;
+
+		// 벗어나지 않게 고정시킨다.
 		mBallPos.y = thickness;
 	}
-	// Did the ball collide with the right wall?
+	// 상단벽을 충돌하고, 상단 벽으로 가고 있다면
 	else if (mBallPos.y >= (768 - thickness) &&
 		mBallVel.y > 0.0f)
 	{
@@ -344,6 +384,7 @@ void Game::GenerateOutput()
 		SDL_RenderFillRect(mRenderer, &wall);
 
 		// Draw paddle
+
 		SDL_Rect paddle{
 			static_cast<int>(mPaddlePos.x),
 			static_cast<int>(mPaddlePos.y - paddleH / 2),
@@ -354,6 +395,9 @@ void Game::GenerateOutput()
 
 		// Draw ball
 		SDL_Rect ball{
+			// mBallPos 는 Ball 의 center 위치이다.
+			// 하지만 SDL_RECT 는 top - left 를 기준으로 그려낸다.
+			// center 기준점으로 그리기 위해서, x,y 를 정확하게 반씩 빼줄 것이다.
 			static_cast<int>(mBallPos.x - thickness / 2),
 			static_cast<int>(mBallPos.y - thickness / 2),
 			thickness,
