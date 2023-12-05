@@ -23,7 +23,11 @@ public:
 	int GetTexHeight() const { return mTexHeight; }
 	int GetTexWidth() const { return mTexWidth; }
 protected:
+
 	SDL_Texture* mTexture;
+	/*
+	mDrawOrder 라는 값을 기준으로 순서대로 sprite component 를 그리게 될 것이다.
+	*/
 	int mDrawOrder;
 	int mTexWidth;
 	int mTexHeight;

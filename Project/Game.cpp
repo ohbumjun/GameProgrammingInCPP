@@ -98,6 +98,15 @@ bool Game::Initialize()
 		return false;
 	}
 
+	/*
+	2D Game 만 만든다고 가정하면 SDL 에서 image file 을 load 할 때 사용하는 SDL Image 를
+	Initialize 하여 사용한다.
+
+	인자로 각종 포멧들을 flag 형태로 제공할 수 있다.
+	IMG_INIT_JPG : JPEG
+	IMG_INIT_PNG : PNG
+	IMG_INIT_TIF : TIFF
+	*/
 	if (IMG_Init(IMG_INIT_PNG) == 0)
 	{
 		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
@@ -333,22 +342,28 @@ void Game::LoadData()
 	// Create actor for the background (this doesn't need a subclass)
 	Actor* temp = new Actor(this);
 	temp->SetPosition(Vector2(512.0f, 384.0f));
+
 	// Create the "far back" background
 	BGSpriteComponent* bg = new BGSpriteComponent(temp);
 	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+
 	std::vector<SDL_Texture*> bgtexs = {
 		GetTexture("Assets/Farback01.png"),
 		GetTexture("Assets/Farback02.png")
 	};
+
 	bg->SetBGTextures(bgtexs);
 	bg->SetScrollSpeed(-100.0f);
+
 	// Create the closer background
 	bg = new BGSpriteComponent(temp, 50);
 	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+
 	bgtexs = {
 		GetTexture("Assets/Stars.png"),
 		GetTexture("Assets/Stars.png")
 	};
+
 	bg->SetBGTextures(bgtexs);
 	bg->SetScrollSpeed(-200.0f);
 }
@@ -417,6 +432,9 @@ void Game::AddSprite(SpriteComponent* sprite)
 {
 	// Find the insertion point in the sorted vector
 	// (The first element with a higher draw order than me)
+	// 즉, SpriteComponent 의 DrawOrder 에 맞춰 순서대로 대상들을 그려내기 위해서
+	// 정렬을 시켜주는 것이다.
+	// 이를 통해 GenerateOutput함수는 그저 m_Sprites 를 순회하면서 그려내기만 하면 된다.
 	int myDrawOrder = sprite->GetDrawOrder();
 	auto iter = mSprites.begin();
 	for (;
@@ -452,6 +470,7 @@ SDL_Texture* Game::GetTexture(const std::string& fileName)
 	else
 	{
 		// Load from file
+		// Image 를 load 하여 SDL_Surface 안에 담는다.
 		SDL_Surface* surf = IMG_Load(fileName.c_str());
 		if (!surf)
 		{
@@ -459,7 +478,8 @@ SDL_Texture* Game::GetTexture(const std::string& fileName)
 			return nullptr;
 		}
 
-		// Create texture from surface
+		// Create texture from surface (SDL_Surface 를 SDL_Texture 로 변환)
+		// SDL_Texture 가 drawing 을 위해 필요한 것이다.
 		tex = SDL_CreateTextureFromSurface(mRenderer, surf);
 		SDL_FreeSurface(surf);
 		if (!tex)
