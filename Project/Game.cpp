@@ -7,6 +7,12 @@
 // ----------------------------------------------------------------
 
 #include "Game.h"
+#include "SDL/SDL_image.h"
+#include <algorithm>
+#include "Actor.h"
+#include "SpriteComponent.h"
+#include "Ship.h"
+#include "BGSpriteComponent.h"
 
 const int thickness = 15;
 const float paddleH = 100.0f;
@@ -16,7 +22,8 @@ Game::Game()
 ,mRenderer(nullptr)
 ,mTicksCount(0)
 ,mIsRunning(true)
-,mPaddleDir(0)
+, mUpdatingActors(false)
+
 {
 	
 }
@@ -90,19 +97,16 @@ bool Game::Initialize()
 		SDL_Log("Failed to create renderer: %s", SDL_GetError());
 		return false;
 	}
-	
-	// winodw 의 left side
-	mPaddlePos.x = 10.0f;
-	mPaddlePos.y = 768.0f/2.0f;
 
-	// Ball Pos 는 center
-	mBallPos.x = 1024.0f/2.0f;
-	mBallPos.y = 768.0f/2.0f;
+	if (IMG_Init(IMG_INIT_PNG) == 0)
+	{
+		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
+		return false;
+	}
 
-	// 200 pixel per second to left
-	mBallVel.x = -200.0f;
-	// 200 pixel per second to up
-	mBallVel.y = 235.0f;
+	LoadData();
+
+	mTicksCount = SDL_GetTicks();
 
 	return true;
 }
@@ -156,16 +160,9 @@ void Game::ProcessInput()
 	{
 		mIsRunning = false;
 	}
-	
-	mPaddleDir = 0;
-	if (state[SDL_SCANCODE_W])
-	{
-		mPaddleDir -= 1;
-	}
-	if (state[SDL_SCANCODE_S])
-	{
-		mPaddleDir += 1;
-	}
+
+	// Process ship input
+	mShip->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame()
@@ -200,79 +197,36 @@ void Game::UpdateGame()
 	// Update tick counts (for next frame)
 	// 이전 frame 에서의 SDL_GetTicks() 를 계산하고, 다음 frame 에서의 SDL_GetTicks 값과 비교하여 delta 를 구한다.
 	mTicksCount = SDL_GetTicks();
-	
-	// Update paddle position based on direction
-	if (mPaddleDir != 0)
-	{
-		mPaddlePos.y += mPaddleDir * 300.0f * deltaTime;
 
-		// 아래 조건들은, screen 범위를 벗어나지 않게 하는 것이다.
-		if (mPaddlePos.y < (paddleH/2.0f + thickness))
+	// Update all actors
+	mUpdatingActors = true;
+	for (auto actor : mActors)
+	{
+		actor->Update(deltaTime);
+	}
+	mUpdatingActors = false;
+
+	// Move any pending actors to mActors
+	for (auto pending : mPendingActors)
+	{
+		mActors.emplace_back(pending);
+	}
+	mPendingActors.clear();
+
+	// Add any dead actors to a temp vector
+	std::vector<Actor*> deadActors;
+	for (auto actor : mActors)
+	{
+		if (actor->GetState() == Actor::EDead)
 		{
-			mPaddlePos.y = paddleH/2.0f + thickness;
-		}
-		else if (mPaddlePos.y > (768.0f - paddleH/2.0f - thickness))
-		{
-			mPaddlePos.y = 768.0f - paddleH/2.0f - thickness;
+			deadActors.emplace_back(actor);
 		}
 	}
-	
-	// Update ball position based on ball velocity
-	mBallPos.x += mBallVel.x * deltaTime;
-	mBallPos.y += mBallVel.y * deltaTime;
-	
-	// Bounce if needed. Did we intrsect with the paddle?
-	// Paddle.y 과 BallPos.y 사이의 절대값을 구한다.
-	float diff = mPaddlePos.y - mBallPos.y;
 
-	diff = (diff > 0.0f) ? diff : -diff;
-
-	// 첫번째 if 문은 ball 과 paddle 이 충돌한 경우를 고려하는 것이다.
-	if (
-		// Ball 이 정확한 x 위치에 있을 때
-		mBallPos.x <= 25.0f 
-		&& mBallPos.x >= 20.0f 
-		// y 차이가 충분히 작을 때 -> 만약 diff > paddleH/2.0f 라면
-		//							즉, y 값 차이가 paddle 높이의 절반보다 크다면. ball 이 paddle 에 비해
-		//							너무 high 에 있거나 너무 낮게 있다는 의미가 된다.
-		&& diff <= paddleH/2.0f
-		// Ball 이 왼쪽으로 이동
-		&& mBallVel.x < 0.0f)
+	// Delete dead actors (which removes them from mActors)
+	for (auto actor : deadActors)
 	{
-		mBallVel.x *= -1.0f;
-		mBallPos.x = 26.0f;
-	}
-	// Did the ball go off the screen? (if so, end game)
-	else if (mBallPos.x <= 0.0f)
-	{
-		// 왼쪽으로 통과해버린다면 ping pong 이 제대로 안되었다는 의미
-		// 이 경우는, 게임을 종료시킨다.
-		mIsRunning = false;
-	}
-	// 오른쪽으로 가고 있고, 오른쪽 벽에 충돌했다면
-	else if (mBallPos.x >= (1024.0f - thickness) && mBallVel.x > 0.0f)
-	{
-		mBallVel.x *= -1.0f;
-		mBallPos.x = 1024.0f - thickness;
-	}
-	
-	// Did the ball collide with the top wall? 
-	// mBallPos.y <= thickness : 하단 벽을 충돌하고
-	// mBallVel.y < 0.0f       : 아래로 가고 있다면
-	if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
-	{
-		// 위 아래 속도 및 방향을 다르게 한다.
-		mBallVel.y *= -1;
-
-		// 벗어나지 않게 고정시킨다.
-		mBallPos.y = thickness;
-	}
-	// 상단벽을 충돌하고, 상단 벽으로 가고 있다면
-	else if (mBallPos.y >= (768 - thickness) &&
-		mBallVel.y > 0.0f)
-	{
-		mBallVel.y *= -1;
-		mBallPos.y = 768 - thickness;
+		delete actor;
 	}
 }
 
@@ -359,61 +313,162 @@ void Game::GenerateOutput()
 	// 시작점 : Back Buffer 를 Clear 한다.
 	SDL_RenderClear(mRenderer);
 
+	// Draw all sprite components
+	for (auto sprite : mSprites)
 	{
-		// Draw walls
-		SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
-
-		// Draw top wall
-		SDL_Rect wall{
-			0,			// Top left x
-			0,			// Top left y
-			1024,		// Width
-			thickness	// Height
-		};
-		SDL_RenderFillRect(mRenderer, &wall);
-
-		// Draw bottom wall
-		wall.y = 768 - thickness;
-		SDL_RenderFillRect(mRenderer, &wall);
-
-		// Draw right wall
-		wall.x = 1024 - thickness;
-		wall.y = 0;
-		wall.w = thickness;
-		wall.h = 1024;
-		SDL_RenderFillRect(mRenderer, &wall);
-
-		// Draw paddle
-
-		SDL_Rect paddle{
-			static_cast<int>(mPaddlePos.x),
-			static_cast<int>(mPaddlePos.y - paddleH / 2),
-			thickness,
-			static_cast<int>(paddleH)
-		};
-		SDL_RenderFillRect(mRenderer, &paddle);
-
-		// Draw ball
-		SDL_Rect ball{
-			// mBallPos 는 Ball 의 center 위치이다.
-			// 하지만 SDL_RECT 는 top - left 를 기준으로 그려낸다.
-			// center 기준점으로 그리기 위해서, x,y 를 정확하게 반씩 빼줄 것이다.
-			static_cast<int>(mBallPos.x - thickness / 2),
-			static_cast<int>(mBallPos.y - thickness / 2),
-			thickness,
-			thickness
-		};
-		SDL_RenderFillRect(mRenderer, &ball);
-
+		sprite->Draw(mRenderer);
 	}
 	
 	// 끝점 : Front 와 Back Buffer 를 Swap 한다.
 	SDL_RenderPresent(mRenderer);
 }
 
+void Game::LoadData()
+{
+	// Create player's ship
+	mShip = new Ship(this);
+	mShip->SetPosition(Vector2(100.0f, 384.0f));
+	mShip->SetScale(1.5f);
+
+	// Create actor for the background (this doesn't need a subclass)
+	Actor* temp = new Actor(this);
+	temp->SetPosition(Vector2(512.0f, 384.0f));
+	// Create the "far back" background
+	BGSpriteComponent* bg = new BGSpriteComponent(temp);
+	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+	std::vector<SDL_Texture*> bgtexs = {
+		GetTexture("Assets/Farback01.png"),
+		GetTexture("Assets/Farback02.png")
+	};
+	bg->SetBGTextures(bgtexs);
+	bg->SetScrollSpeed(-100.0f);
+	// Create the closer background
+	bg = new BGSpriteComponent(temp, 50);
+	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+	bgtexs = {
+		GetTexture("Assets/Stars.png"),
+		GetTexture("Assets/Stars.png")
+	};
+	bg->SetBGTextures(bgtexs);
+	bg->SetScrollSpeed(-200.0f);
+}
+
+void Game::UnloadData()
+{
+	// Delete actors
+	// Because ~Actor calls RemoveActor, have to use a different style loop
+	while (!mActors.empty())
+	{
+		delete mActors.back();
+	}
+
+	// Destroy textures
+	for (auto i : mTextures)
+	{
+		SDL_DestroyTexture(i.second);
+	}
+	mTextures.clear();
+}
+
 void Game::Shutdown()
 {
+	UnloadData();
+	IMG_Quit();
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
+}
+
+void Game::AddActor(Actor* actor)
+{
+	// If we're updating actors, need to add to pending
+	if (mUpdatingActors)
+	{
+		mPendingActors.emplace_back(actor);
+	}
+	else
+	{
+		mActors.emplace_back(actor);
+	}
+}
+
+void Game::RemoveActor(Actor* actor)
+{
+	// Is it in pending actors?
+	auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
+	if (iter != mPendingActors.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mPendingActors.end() - 1);
+		mPendingActors.pop_back();
+	}
+
+	// Is it in actors?
+	iter = std::find(mActors.begin(), mActors.end(), actor);
+	if (iter != mActors.end())
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, mActors.end() - 1);
+		mActors.pop_back();
+	}
+}
+
+void Game::AddSprite(SpriteComponent* sprite)
+{
+	// Find the insertion point in the sorted vector
+	// (The first element with a higher draw order than me)
+	int myDrawOrder = sprite->GetDrawOrder();
+	auto iter = mSprites.begin();
+	for (;
+		iter != mSprites.end();
+		++iter)
+	{
+		if (myDrawOrder < (*iter)->GetDrawOrder())
+		{
+			break;
+		}
+	}
+
+	// Inserts element before position of iterator
+	mSprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite)
+{
+	// (We can't swap because it ruins ordering)
+	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	mSprites.erase(iter);
+}
+
+SDL_Texture* Game::GetTexture(const std::string& fileName)
+{
+	SDL_Texture* tex = nullptr;
+	// Is the texture already in the map?
+	auto iter = mTextures.find(fileName);
+	if (iter != mTextures.end())
+	{
+		tex = iter->second;
+	}
+	else
+	{
+		// Load from file
+		SDL_Surface* surf = IMG_Load(fileName.c_str());
+		if (!surf)
+		{
+			SDL_Log("Failed to load texture file %s", fileName.c_str());
+			return nullptr;
+		}
+
+		// Create texture from surface
+		tex = SDL_CreateTextureFromSurface(mRenderer, surf);
+		SDL_FreeSurface(surf);
+		if (!tex)
+		{
+			SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+			return nullptr;
+		}
+
+		mTextures.emplace(fileName.c_str(), tex);
+	}
+	return tex;
 }

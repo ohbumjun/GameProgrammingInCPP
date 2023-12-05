@@ -8,14 +8,9 @@
 
 #pragma once
 #include "SDL/SDL.h"
-
-// Vector2 struct just stores x/y coordinates
-// (for now)
-struct Vector2
-{
-	float x;
-	float y;
-};
+#include <unordered_map>
+#include <string>
+#include <vector>
 
 // Game class
 class Game
@@ -28,11 +23,22 @@ public:
 	void RunLoop();
 	// Shutdown the game
 	void Shutdown();
+
+
+	void AddActor(class Actor* actor);
+	void RemoveActor(class Actor* actor);
+
+	void AddSprite(class SpriteComponent* sprite);
+	void RemoveSprite(class SpriteComponent* sprite);
+
+	SDL_Texture* GetTexture(const std::string& fileName);
 private:
 	// Helper functions for the game loop
 	void ProcessInput();
 	void UpdateGame();
-	void GenerateOutput();
+	void GenerateOutput();	
+	void LoadData();
+	void UnloadData();
 
 	// Window created by SDL
 	SDL_Window* mWindow;
@@ -42,17 +48,21 @@ private:
 	Uint32 mTicksCount;
 	// Game is still running
 	bool mIsRunning;
-	
-	// Pong specific Direction of paddle
-	// ex) 0 : not move / -1 : up / 1 : down
-	int mPaddleDir;
 
-	// Position of paddle
-	Vector2 mPaddlePos;
+	// Map of textures loaded
+	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
-	// Position of ball
-	Vector2 mBallPos;
+	// All the actors in the game
+	std::vector<class Actor*> mActors;
+	// Any pending actors
+	std::vector<class Actor*> mPendingActors;
 
-	// Velocity of ball
-	Vector2 mBallVel;
+	// All the sprite components drawn
+	std::vector<class SpriteComponent*> mSprites;
+
+	// Track if we're updating actors right now
+	bool mUpdatingActors;
+
+	// Game-specific
+	class Ship* mShip; // Player's ship
 };
