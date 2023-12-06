@@ -10,6 +10,15 @@
 #include "SpriteComponent.h"
 #include <vector>
 #include "Math.h"
+
+/*
+TODO
+p 147 의 parallax scrolling 적용해보기
+*/
+
+/*
+배경에 해당하는 image 가 scroll 하는 느낌을 주기 위한 Component 이다.
+*/
 class BGSpriteComponent : public SpriteComponent
 {
 public:
@@ -29,6 +38,10 @@ private:
 	struct BGTexture
 	{
 		SDL_Texture* mTexture;
+
+		/*
+		mOffset 값을 매 프레임 update 해서 scrolling effect 를 줄 것이다.
+		*/
 		Vector2 mOffset;
 	};
 	std::vector<BGTexture> mBGTextures;

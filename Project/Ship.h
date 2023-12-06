@@ -17,6 +17,8 @@ public:
 	float GetRightSpeed() const { return mRightSpeed; }
 	float GetDownSpeed() const { return mDownSpeed; }
 private:
+	// left, right speed
 	float mRightSpeed;
+	// up, down speed
 	float mDownSpeed;
 };

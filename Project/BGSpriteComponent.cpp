@@ -60,9 +60,14 @@ void BGSpriteComponent::SetBGTextures(const std::vector<SDL_Texture*>& textures)
 	{
 		BGTexture temp;
 		temp.mTexture = tex;
+
 		// Each texture is screen width in offset
+		// 오른쪽으로 쭉 ~~ 늘어뜨려서 배치하는 것이다 
+		// ex)[화면]<-[이미지][이미지][이미지][이미지]
 		temp.mOffset.x = count * mScreenSize.x;
+
 		temp.mOffset.y = 0;
+
 		mBGTextures.emplace_back(temp);
 		count++;
 	}

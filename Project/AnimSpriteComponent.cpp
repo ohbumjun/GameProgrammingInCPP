@@ -40,6 +40,7 @@ void AnimSpriteComponent::Update(float deltaTime)
 void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textures)
 {
 	mAnimTextures = textures;
+
 	if (mAnimTextures.size() > 0)
 	{
 		// Set the active texture to first frame
