@@ -85,6 +85,24 @@ namespace Math
 		return acosf(value);
 	}
 
+	/*
+	usage ex)
+
+	방향 forward vector 가 주어지고, 이로부터 angle 을 구하고 싶다고 해보자.
+	atan2 함수는 2개의 인자를 받는다.
+
+	x : 삼각형의 가로
+	y : 삼각형의 세로
+
+	(예시)
+	double x = 3.0;
+	double y = 4.0;
+	// Calculate the angle (in radians) using atan2
+	double angle = std::atan2(y, x);
+	// Convert the angle to degrees for better readability
+	double angle_degrees = angle * (180.0 / M_PI);
+
+	*/
 	inline float Atan2(float y, float x)
 	{
 		return atan2f(y, x);

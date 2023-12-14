@@ -29,10 +29,12 @@ Ship::Ship(Game* game)
 void Ship::UpdateActor(float deltaTime)
 {
 	Actor::UpdateActor(deltaTime);
+
 	// Update position based on speeds and delta time
 	Vector2 pos = GetPosition();
 	pos.x += mRightSpeed * deltaTime;
 	pos.y += mDownSpeed * deltaTime;
+
 	// Restrict position to left half of screen
 	if (pos.x < 25.0f)
 	{
@@ -50,6 +52,7 @@ void Ship::UpdateActor(float deltaTime)
 	{
 		pos.y = 743.0f;
 	}
+
 	SetPosition(pos);
 }
 
