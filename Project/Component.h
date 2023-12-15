@@ -7,6 +7,9 @@
 // ----------------------------------------------------------------
 
 #pragma once
+
+#include <cstdint>
+
 class Component
 {
 public:
@@ -19,6 +22,10 @@ public:
 	virtual void Update(float deltaTime);
 
 	int GetUpdateOrder() const { return mUpdateOrder; }
+
+	// Process input for this component
+	virtual void ProcessInput(const uint8_t* keyState) {};
+
 protected:
 	// Owning actor
 	class Actor* mOwner;

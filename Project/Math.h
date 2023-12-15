@@ -89,6 +89,7 @@ namespace Math
 	usage ex)
 
 	방향 forward vector 가 주어지고, 이로부터 angle 을 구하고 싶다고 해보자.
+	2D 게임에서이다. 
 	atan2 함수는 2개의 인자를 받는다.
 
 	x : 삼각형의 가로
@@ -237,6 +238,15 @@ public:
 	}
 
 	// Dot product between two vectors (a dot b)
+	/*
+	두 벡터 사이의 Angle 을 구하는 방법
+	float dotResult = Dot(origForward, newForward)
+	float angle     = Math::Acos(dotResult)
+
+	a dot b = |a| |b| (cos 각도)
+
+	이때 a, b 가 normalize 벡터라면 a dot b 는 (cos 각도)가 된다.
+	*/
 	static float Dot(const Vector2& a, const Vector2& b)
 	{
 		return (a.x * b.x + a.y * b.y);
@@ -391,8 +401,14 @@ public:
 	}
 
 	// Cross product between two vectors (a cross b)
+	/*
+	외적을 구하는 함수
+	- 보통 Normal 값을 구할 때 사용되기도 한다.
+	*/
 	static Vector3 Cross(const Vector3& a, const Vector3& b)
 	{
+		// 확실하지는 않지만, opengl 왼손 좌표계에서의 cross ?
+		// a 는 전방 방향, b 는 우측 방향 vector
 		Vector3 temp;
 		temp.x = a.y * b.z - a.z * b.y;
 		temp.y = a.z * b.x - a.x * b.z;

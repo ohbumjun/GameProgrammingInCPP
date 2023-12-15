@@ -60,7 +60,7 @@ void Actor::ProcessInput(const uint8_t* keyState)
 		// First process input for components
 		for (auto comp : mComponents)
 		{
-			comp->ProcessInput(keyState);
+			// comp->ProcessInput(keyState);
 		}
 
 		ActorInput(keyState);
