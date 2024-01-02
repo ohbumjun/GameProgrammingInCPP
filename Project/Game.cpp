@@ -174,9 +174,13 @@ void Game::ProcessInput()
 		mIsRunning = false;
 	}
 
+	// 모든 Actor 를 순회하면서 input 을 처리한다.
 	mUpdatingActors = true;
 	for (auto actor : mActors)
 	{
+		// 내부에서 만약 새로운 Actor Class 를 생성한ㄴ다면
+		// mActors 가 아니라, mPendingActors 에 새로운 Actor 들을
+		// 추가해줘야 한다.
 		actor->ProcessInput(keyState);
 	}
 	mUpdatingActors = false;

@@ -36,9 +36,11 @@ private:
 	// The maximum forward/angular speeds
 	float mMaxForwardSpeed;
 	float mMaxAngularSpeed;
+
 	// Keys for forward/back movement
 	int mForwardKey;
 	int mBackKey;
+
 	// Keys for angular movement
 	int mClockwiseKey;
 	int mCounterClockwiseKey;
