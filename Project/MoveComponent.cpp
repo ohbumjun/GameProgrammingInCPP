@@ -17,10 +17,16 @@ MoveComponent::MoveComponent(class Actor* owner, int updateOrder)
 
 }
 
+/*
+Actor 내부의 여러 Component 를 Update 할 것이다.
+단, MoveComponent 의 경우 다른 Component 들보다
+가장 먼저 update 되어야 하는 녀석중 하나이다.
+*/
 void MoveComponent::Update(float deltaTime)
 {
 	if (!Math::NearZero(mAngularSpeed))
 	{
+		// Actor 회전시키기 
 		float rot = mOwner->GetRotation();
 		rot += mAngularSpeed * deltaTime;
 		mOwner->SetRotation(rot);
@@ -29,6 +35,8 @@ void MoveComponent::Update(float deltaTime)
 	if (!Math::NearZero(mForwardSpeed))
 	{
 		Vector2 pos = mOwner->GetPosition();
+
+		// 전방 방향으로 이동 시키기 
 		pos += mOwner->GetForward() * mForwardSpeed * deltaTime;
 
 		// (Screen wrapping code only for asteroids)

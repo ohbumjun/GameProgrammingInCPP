@@ -221,6 +221,19 @@ public:
 		return (Math::Sqrt(LengthSq()));
 	}
 
+	/*
+	참고
+	- 방향이 필요할 때는 항상 normalize 를 해야 한다.
+	예를 들어, arrow 의 방향 혹은 Actor 의 방향 등을 구할 때는
+	항상 Normalize 를 해야 한다.
+
+	- 단, 거리가 중요하다면 normalize 하는 순간 그 거리 정보는
+	사라지기 때문에 조심해야 한다.
+
+	즉, 결과적으로 forward vector, up vector 는 일반적으로 normalize 할 것이다
+	하지만 gravity vector 같은 크기 정보가 중요한 vector 는
+	normalize 하지 않을 것이다.
+	*/
 	// Normalize this vector
 	void Normalize()
 	{
@@ -395,6 +408,26 @@ public:
 	}
 
 	// Dot product between two vectors (a dot b)
+	/*
+	a dot b = |a||b| cos(각도) 
+
+	각도 = acos(unit vector A . dot . unit vector B)
+	
+	>> 2개의 unit vector 의 dot 결과 
+
+	0 : 수직 -> 왜냐하면 cos(90) 이 0 이기 때문이다.
+	1 : 평행
+	
+	>> 주의할 점
+
+	acos 이 리턴하는 각도는 0 ~ ㅠ 사이의 각도이다.
+	즉, 두 벡터 사이의 회전 최소값을 리턴한다.
+	회전이 시계방향인지, 반시계방향인지는 알려주지 않는다.
+
+	>> 2개의 forward vector 사이의 각도 구하기
+	float dotResult = Vector2::Dot(origForward, newForward);
+	float angle      = Math::Acos(dotResult);
+	*/
 	static float Dot(const Vector3& a, const Vector3& b)
 	{
 		return (a.x * b.x + a.y * b.y + a.z * b.z);
@@ -402,8 +435,27 @@ public:
 
 	// Cross product between two vectors (a cross b)
 	/*
-	외적을 구하는 함수
+	>> 외적을 구하는 함수
 	- 보통 Normal 값을 구할 때 사용되기도 한다.
+
+	>> 교환법칙이 성립하지 않는다
+	a x b = - b x a
+
+	>> 왼손 법칙을 통해 외적 결과를 구할 수 있다 (p 175)
+	왼쪽 손가락에서 2번째 손가락 정면을 a, 중간 손가락 우측을 b
+	그러면 위를 가리키는 엄지가 c
+	
+	>> 결과 해석
+	(0,0,0) : a, b 가 동일선상의 벡터들. 같은 방향 혹은 다른 방향이던 평행.
+	왜냐하면 이 경우 2개의 vector 를 이용해서 plane 을 만들어낼 수 없기 때문
+
+	>> 사용용도
+	삼각형의 normal 을 계산하는데 사용될 수 있다.
+	A, B, C 정점이 있을 때
+	u = B - A
+	v = C - A
+	n = u x v
+	n.normalize
 	*/
 	static Vector3 Cross(const Vector3& a, const Vector3& b)
 	{

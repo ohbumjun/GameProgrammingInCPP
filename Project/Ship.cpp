@@ -33,6 +33,29 @@ Ship::Ship(Game* game)
 void Ship::UpdateActor(float deltaTime)
 {
 	mLaserCooldown -= deltaTime;
+
+	/*
+	참고.
+	- 만약 ship 이 asteroid 를 향해 바라보게 하고 싶다고 해보자.
+	1) 먼저 ship 에서 aesteroid 방향으로의 vector 를 만든다
+	그리고 normalize 한다
+	2) atan2 를 활용하여 위에서 만들어준 forward vector 를
+	새로운 angle 로 만들어준다
+	3) 마지막으로, ship 의 rotation 을 해당 angle 로 설정해준다.
+	이때 중요한 것은 y component 를 뒤집어 줘서 SDL 2d 좌표계에
+	맞춰줘야 한다.
+
+
+	Vector2 shipToAsteroid = asteroid->GetPosition() - GetPosition();
+	shipToAsteroid.Normalize();
+	float angle = Math::Atan2(-shipToAsteroid.y, shipToAsteroid.x);
+	ship->SetRotation(angle);
+
+	단, 이와 같이 2D game 에서는, 즉, xy 축만 사용하는 2D Grame 에서만
+	atan2 를 이용하여 각도를 구해야 한다.
+
+	3D 게임의 경우는 Dot Product 를 사용해야 한다.
+	*/
 }
 
 void Ship::ActorInput(const uint8_t* keyState)

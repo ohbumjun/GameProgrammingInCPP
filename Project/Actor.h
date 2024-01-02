@@ -32,6 +32,8 @@ public:
 
 	// ProcessInput function called from Game (not overridable)
 	void ProcessInput(const uint8_t* keyState);
+
+	// Actor Sub Class 들은 Actor Input 함수를 override 하여 사용하게 한다.
 	// Any actor-specific input code (overridable)
 	virtual void ActorInput(const uint8_t* keyState);
 
@@ -65,6 +67,7 @@ private:
 	float mScale;
 
 	// radian 형태의 rotation 이 된다.
+	// 이것을 통해서 내가 원하는 방향으로 actor 를 rotate 시킬 수 있다.
 	float mRotation;
 
 	std::vector<class Component*> mComponents;
