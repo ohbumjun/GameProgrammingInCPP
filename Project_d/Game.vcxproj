@@ -13,47 +13,23 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
-    <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="BGSpriteComponent.cpp" />
-    <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ECSComponent.cpp" />
-    <ClCompile Include="ECSWorld.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputComponent.cpp" />
-    <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="MoveComponent.cpp" />
-    <ClCompile Include="MoveECSComponent.cpp" />
-    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="SpriteECSComponent.cpp" />
-    <ClCompile Include="StateECSComponent.cpp" />
-    <ClCompile Include="TransformECSComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
-    <ClInclude Include="Asteroid.h" />
     <ClInclude Include="BGSpriteComponent.h" />
-    <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="ECSComponent.h" />
-    <ClInclude Include="ECSWorld.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="InputComponent.h" />
-    <ClInclude Include="Laser.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="MoveComponent.h" />
-    <ClInclude Include="MoveECSComponent.h" />
-    <ClInclude Include="Random.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="SpriteECSComponent.h" />
-    <ClInclude Include="StateECSComponent.h" />
-    <ClInclude Include="TransformECSComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC508D87-495F-4554-932D-DD68388B63CC}</ProjectGuid>
@@ -65,15 +41,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

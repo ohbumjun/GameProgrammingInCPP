@@ -52,6 +52,24 @@
     <ClCompile Include="Asteroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ECSWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h" />
@@ -68,5 +86,11 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="ECSWorld.h" />
+    <ClInclude Include="SpriteECSComponent.h" />
+    <ClInclude Include="MoveECSComponent.h" />
+    <ClInclude Include="TransformECSComponent.h" />
+    <ClInclude Include="ECSComponent.h" />
+    <ClInclude Include="StateECSComponent.h" />
   </ItemGroup>
 </Project>

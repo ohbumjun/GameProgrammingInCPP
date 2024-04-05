@@ -32,11 +32,6 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 
 	SDL_Texture* GetTexture(const std::string& fileName);
-	// Game-specific (add/remove asteroid)
-	void AddAsteroid(class Asteroid* ast);
-	void RemoveAsteroid(class Asteroid* ast);
-	std::vector<class Asteroid*>& GetAsteroids() { return mAsteroids; }
-
 private:
 	// Helper functions for the game loop
 	void ProcessInput();
@@ -44,12 +39,6 @@ private:
 	void GenerateOutput();	
 	void LoadData();
 	void UnloadData();
-
-	// Test
-	void TestECS();
-
-	// Map of textures loaded
-	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
 	// Window created by SDL
 	SDL_Window* mWindow;
@@ -59,6 +48,9 @@ private:
 	Uint32 mTicksCount;
 	// Game is still running
 	bool mIsRunning;
+
+	// Map of textures loaded
+	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
 	// All the actors in the game
 	std::vector<class Actor*> mActors;
@@ -73,5 +65,4 @@ private:
 
 	// Game-specific
 	class Ship* mShip; // Player's ship
-	std::vector<class Asteroid*> mAsteroids;
 };

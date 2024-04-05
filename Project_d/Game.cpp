@@ -13,9 +13,6 @@
 #include "SpriteComponent.h"
 #include "Ship.h"
 #include "BGSpriteComponent.h"
-#include "Asteroid.h"
-#include "ECSWorld.h"
-#include "Random.h"
 
 const int thickness = 15;
 const float paddleH = 100.0f;
@@ -115,10 +112,8 @@ bool Game::Initialize()
 		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
 		return false;
 	}
-	Random::Init();
 
 	LoadData();
-	// TestECS();
 
 	mTicksCount = SDL_GetTicks();
 
@@ -169,23 +164,14 @@ void Game::ProcessInput()
 	}
 	
 	// Get state of keyboard
-	const Uint8* keyState = SDL_GetKeyboardState(NULL);
-
-	if (keyState[SDL_SCANCODE_ESCAPE])
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_ESCAPE])
 	{
 		mIsRunning = false;
 	}
 
-	// 모든 Actor 를 순회하면서 input 을 처리한다.
-	mUpdatingActors = true;
-	for (auto actor : mActors)
-	{
-		// 내부에서 만약 새로운 Actor Class 를 생성한ㄴ다면
-		// mActors 가 아니라, mPendingActors 에 새로운 Actor 들을
-		// 추가해줘야 한다.
-		actor->ProcessInput(keyState);
-	}
-	mUpdatingActors = false;
+	// Process ship input
+	mShip->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame()
@@ -329,7 +315,8 @@ void Game::GenerateOutput()
 		mRenderer,
 		0,		// R
 		0,		// G 
-		255,	// B
+		// 255,	// B
+		0,	// B
 		255		// A
 	);
 
@@ -348,16 +335,38 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
+	// Create player's ship
 	mShip = new Ship(this);
-	mShip->SetPosition(Vector2(512.0f, 384.0f));
-	mShip->SetRotation(Math::PiOver2);
+	mShip->SetPosition(Vector2(100.0f, 384.0f));
+	mShip->SetScale(1.5f);
 
-	// Create asteroids
-	const int numAsteroids = 20;
-	for (int i = 0; i < numAsteroids; i++)
-	{
-		new Asteroid(this);
-	}
+	// Create actor for the background (this doesn't need a subclass)
+	Actor* temp = new Actor(this);
+	temp->SetPosition(Vector2(512.0f, 384.0f));
+
+	// Create the "far back" background
+	BGSpriteComponent* bg = new BGSpriteComponent(temp);
+	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+
+	std::vector<SDL_Texture*> bgtexs = {
+		GetTexture("Assets/Farback01.png"),
+		GetTexture("Assets/Farback02.png")
+	};
+
+	bg->SetBGTextures(bgtexs);
+	bg->SetScrollSpeed(-100.0f);
+
+	// Create the closer background
+	bg = new BGSpriteComponent(temp, 50);
+	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+
+	bgtexs = {
+		GetTexture("Assets/Stars.png"),
+		GetTexture("Assets/Stars.png")
+	};
+
+	bg->SetBGTextures(bgtexs);
+	bg->SetScrollSpeed(-200.0f);
 }
 
 void Game::UnloadData()
@@ -375,33 +384,6 @@ void Game::UnloadData()
 		SDL_DestroyTexture(i.second);
 	}
 	mTextures.clear();
-}
-
-void Game::TestECS()
-{
-
-	using namespace decs;
-	{
-		ECSWorld world{};
-
-		std::vector<EntityID> entities;
-
-		for (int i = 0; i < 1000; i++) {
-			entities.push_back(world.new_entity());
-		}
-
-		// EXPECT_EQ(world.entities.size(), 1000);
-		// EXPECT_EQ(world.live_entities, 1000);
-
-		for (auto eid : entities) {
-			world.destroy(eid);
-		}
-
-		for (int i = 0; i < 1000; i++) {
-			entities.push_back(world.new_entity<SpriteComponent>());
-		}
-	}
-	
 }
 
 void Game::Shutdown()
@@ -510,19 +492,4 @@ SDL_Texture* Game::GetTexture(const std::string& fileName)
 		mTextures.emplace(fileName.c_str(), tex);
 	}
 	return tex;
-}
-
-void Game::AddAsteroid(Asteroid* ast)
-{
-	mAsteroids.emplace_back(ast);
-}
-
-void Game::RemoveAsteroid(Asteroid* ast)
-{
-	auto iter = std::find(mAsteroids.begin(),
-		mAsteroids.end(), ast);
-	if (iter != mAsteroids.end())
-	{
-		mAsteroids.erase(iter);
-	}
 }
