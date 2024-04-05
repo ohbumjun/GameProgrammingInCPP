@@ -70,6 +70,18 @@
     <ClCompile Include="StateECSComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpookyHash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h" />
@@ -92,5 +104,12 @@
     <ClInclude Include="TransformECSComponent.h" />
     <ClInclude Include="ECSComponent.h" />
     <ClInclude Include="StateECSComponent.h" />
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="SpookyHash.h" />
+    <ClInclude Include="Common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

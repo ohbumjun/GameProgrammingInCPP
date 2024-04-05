@@ -404,8 +404,8 @@ void Game::TestECS()
 		for (int i = 0; i < entityNum; i++) {
 			auto et = world.new_entity();
 			TransformECSComponent* tcmp = world.add_component<TransformECSComponent>(et);
-			world.add_component<SpriteECSComponent>(et);
-			world.add_component<MoveECSComponent>(et);
+			SpriteECSComponent* spCmp = world.add_component<SpriteECSComponent>(et);
+			MoveECSComponent* moveCmp = world.add_component<MoveECSComponent>(et);
 		}
 	}
 	
