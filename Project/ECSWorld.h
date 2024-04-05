@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include <type_traits>
 #include <cassert>
@@ -135,8 +137,13 @@ namespace decs {
 			hash.matcher_hash |= (uint64_t)0x1L << (uint64_t)((hash.name_hash) % 63L);
 			return hash;
 		};
+		
+		
+		// 내부적으로 meta.constructor 등의 변수는
+		// new 를 이용한 dynamic allocation 을 진행하고 있기 때문에
 		template<typename T>
-		static constexpr Metatype build() {
+		// static constexpr Metatype build() {
+		static Metatype build() {
 
 			Metatype meta{};
 			meta.hash = build_hash<T>();
@@ -489,7 +496,40 @@ namespace decs {
 
 				auto type = metatype_cache.find(name_hash);
 				if (type == metatype_cache.end()) {
-					constexpr Metatype newtype = Metatype::build<T>();
+					/*
+					constexpr 함수 만족 조건
+
+					>> virtual 이면 안된다
+
+					>> return type 이 literal type 이어야 한다.
+					즉, 다른 말로 해서 compile time 때 생성되는 object 혹은 값이어야 한다.
+					ex) int, float 등
+					한편, literal type 이 아닌 것은, runtime 때 생성되는 것들이다.
+					user defined type 도, 특정 조건을 만족해야만 literal type 이 된다.
+					ex) std::function, std::vector 등
+					ex) 혹은 dynamic memory allocation 이 일어나는 것들도 literal type 이 아니다.
+					ex) 
+					- parameter 들도 literal type 이어야 한다.
+					- function body 가 function try block 이면 안된다.
+					ex) void foo() try {
+						   // function body
+					   } catch (...) {
+						   // handle exceptions
+						}
+						이와 같은 형태가 되면 안된다는 것이다.
+
+					>> 내부적으로 non-constexpr 함수를 호출하면 안된다.
+
+					>> non-trivial destructor 가 없어야 한다.
+					그렇다면 "trivial" destructor 란 무엇일까 ?
+
+					- user 가 정의하면 안된다.
+					- delete 되어서도 안된다.
+					- class 가 virtual destructor 를 가지면 안된다.
+					- base class 들도 trivial destructor 를 가져야 한다.
+					*/
+					// constexpr Metatype newtype = Metatype::build<T>();
+					Metatype newtype = Metatype::build<T>();
 					metatype_cache[name_hash] = newtype;
 				}
 				return &metatype_cache[name_hash];

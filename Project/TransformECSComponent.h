@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Math.h"
+#include "ECSComponent.h"
 
 class TransformECSComponent 
 {
 public :
-	TransformECSComponent() = default;
-	~TransformECSComponent() = default;
-
 	const Vector2& GetPosition() const { return mPosition; }
 	void SetPosition(const Vector2& pos) { mPosition = pos; }
 

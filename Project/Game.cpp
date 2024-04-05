@@ -16,6 +16,14 @@
 #include "Asteroid.h"
 #include "ECSWorld.h"
 #include "Random.h"
+#include <chrono>
+
+// ECS
+#include "MoveECSComponent.h"
+#include "TransformECSComponent.h"
+#include "SpriteECSComponent.h"
+
+#define USE_ECS 1
 
 const int thickness = 15;
 const float paddleH = 100.0f;
@@ -117,8 +125,11 @@ bool Game::Initialize()
 	}
 	Random::Init();
 
+#ifdef USE_ECS
+	TestECS();
+#else
 	LoadData();
-	// TestECS();
+#endif // USE_ECS
 
 	mTicksCount = SDL_GetTicks();
 
@@ -129,9 +140,14 @@ void Game::RunLoop()
 {
 	while (mIsRunning)
 	{
+		auto start = std::chrono::steady_clock::now();
 		ProcessInput();
 		UpdateGame();
 		GenerateOutput();
+
+		auto end = std::chrono::steady_clock::now();
+		std::chrono::duration<double, std::milli> elapsed_time = end - start;
+		bool h = true;
 	}
 }
 
@@ -353,7 +369,7 @@ void Game::LoadData()
 	mShip->SetRotation(Math::PiOver2);
 
 	// Create asteroids
-	const int numAsteroids = 20;
+	const int numAsteroids = 20000;
 	for (int i = 0; i < numAsteroids; i++)
 	{
 		new Asteroid(this);
@@ -379,6 +395,7 @@ void Game::UnloadData()
 
 void Game::TestECS()
 {
+	struct TestComp { int i; };
 
 	using namespace decs;
 	{
@@ -397,8 +414,11 @@ void Game::TestECS()
 			world.destroy(eid);
 		}
 
+		// auto et = world.new_entity();
+		// world.add_component<TestComp>(et, TestComp{ 1 });
+
 		for (int i = 0; i < 1000; i++) {
-			entities.push_back(world.new_entity<SpriteComponent>());
+			entities.push_back(world.new_entity<TransformECSComponent>());
 		}
 	}
 	
