@@ -23,8 +23,9 @@
 #include "TransformECSComponent.h"
 #include "SpriteECSComponent.h"
 
-#define USE_ECS 1
+// #define USE_ECS 1
 
+const int entityNum = 10000;
 const int thickness = 15;
 const float paddleH = 100.0f;
 
@@ -369,11 +370,12 @@ void Game::LoadData()
 	mShip->SetRotation(Math::PiOver2);
 
 	// Create asteroids
-	const int numAsteroids = 20000;
+	const int numAsteroids = entityNum;
 	for (int i = 0; i < numAsteroids; i++)
 	{
 		new Asteroid(this);
 	}
+	bool h = true;
 }
 
 void Game::UnloadData()
@@ -396,29 +398,14 @@ void Game::UnloadData()
 void Game::TestECS()
 {
 	struct TestComp { int i; };
-
-	using namespace decs;
 	{
-		ECSWorld world{};
-
-		std::vector<EntityID> entities;
-
-		for (int i = 0; i < 1000; i++) {
-			entities.push_back(world.new_entity());
-		}
-
-		// EXPECT_EQ(world.entities.size(), 1000);
-		// EXPECT_EQ(world.live_entities, 1000);
-
-		for (auto eid : entities) {
-			world.destroy(eid);
-		}
-
 		// auto et = world.new_entity();
 		// world.add_component<TestComp>(et, TestComp{ 1 });
-
-		for (int i = 0; i < 1000; i++) {
-			entities.push_back(world.new_entity<TransformECSComponent>());
+		for (int i = 0; i < entityNum; i++) {
+			auto et = world.new_entity();
+			world.add_component<TransformECSComponent>(et);
+			world.add_component<SpriteECSComponent>(et);
+			world.add_component<MoveECSComponent>(et);
 		}
 	}
 	

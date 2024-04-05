@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include "ECSWorld.h"
 
 // Game class
 class Game
@@ -45,8 +46,6 @@ private:
 	void LoadData();
 	void UnloadData();
 
-	// Test
-	void TestECS();
 
 	// Map of textures loaded
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
@@ -74,4 +73,8 @@ private:
 	// Game-specific
 	class Ship* mShip; // Player's ship
 	std::vector<class Asteroid*> mAsteroids;
+
+	// ECS Test
+	void TestECS();
+	decs::ECSWorld world{};
 };

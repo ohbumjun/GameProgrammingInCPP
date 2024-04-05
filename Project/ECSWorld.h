@@ -242,6 +242,7 @@ namespace decs {
 		// 다른 말로 하면, 최대 몇개의 entity 정보가 들어갈 수 있는가. 
 		int16_t chunkCapacity;
 
+		// 해당 vector 를, unoredered_map 형태로 변경하는 것도 좋은 것 같다.
 		std::vector<CmpPair> components;
 	};
 
@@ -431,8 +432,11 @@ namespace decs {
 		template<typename Func>
 		void for_each(Func&& function);
 
+		/*
 		template<typename C>
 		void add_component(EntityID id, C& comp);
+		*/
+
 		template<typename C>
 		void add_component(EntityID id);
 
@@ -1057,9 +1061,6 @@ namespace decs {
 		C& get_entity_component(ECSWorld* world, EntityID id);
 
 		template<typename C>
-		void add_component_to_entity(ECSWorld* world, EntityID id, C&& comp);
-
-		template<typename C>
 		void remove_component_from_entity(ECSWorld* world, EntityID id);
 
 		template<typename F>
@@ -1232,7 +1233,31 @@ namespace decs {
 				set_entity_archetype(newArch, id);
 			}
 
+			if (!type->is_empty()) {
+
+				DataChunk* entityChunk		= world->entities[id.index].chunk;
+				int entityIdxInChunk				= newArch->ownerWorld->entities[id.index].chunkIndex;
+				ChunkComponentList* cmpList = entityChunk->header.componentList;
+
+				for (auto& cmp : cmpList->components) {
+
+					const Metatype* compareType = cmp.type;
+
+					if (cmp.hash == type->hash)
+					{
+						void* ptr = (void*)((byte*)entityChunk + cmp.chunkOffset + (type->size * entityIdxInChunk));
+
+						type->constructor(ptr);
+
+						break;
+					}
+				}
+			}
 		}
+
+		/*
+		중요 : 일단 주석처리한다. 이런 식으로 외부로 comp 를 넣어주는 방식 말고
+		내부적으로 comp 를 생성하는 방식을 취하고자 한다.
 		template<typename C>
 		void add_component_to_entity(ECSWorld* world, EntityID id, C& comp)
 		{
@@ -1247,6 +1272,7 @@ namespace decs {
 				get_entity_component<C>(world, id) = comp;
 			}
 		}
+		*/
 
 		template<typename C>
 		void remove_component_from_entity(ECSWorld* world, EntityID id)
@@ -1600,11 +1626,13 @@ namespace decs {
 		for_each<Func>(query, std::move(function));
 	}
 
+	/*
 	template<typename C>
 	inline void ECSWorld::add_component(EntityID id, C& comp)
 	{
 		adv::add_component_to_entity<C>(this, id, comp);
 	}
+	*/
 
 	template<typename C>
 	void ECSWorld::add_component(EntityID id)
