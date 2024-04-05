@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
+    <ClCompile Include="AssetAttribute.cpp" />
+    <ClCompile Include="AssetExtension.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="BaseObject.cpp" />
@@ -22,6 +24,9 @@
     <ClCompile Include="ECSComponent.cpp" />
     <ClCompile Include="ECSWorld.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="FileId.cpp" />
+    <ClCompile Include="Guid.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Asset.cpp" />
@@ -40,6 +45,8 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
+    <ClInclude Include="AssetAttribute.h" />
+    <ClInclude Include="AssetExtension.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="BaseObject.h" />
@@ -50,6 +57,9 @@
     <ClInclude Include="ECSComponent.h" />
     <ClInclude Include="ECSWorld.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="FileId.h" />
+    <ClInclude Include="Guid.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Asset.h" />

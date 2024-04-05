@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include "Common.h"
 
 // To make 96bit unkeyed hash. I only changed it to our formatting

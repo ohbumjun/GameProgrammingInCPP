@@ -1,5 +1,13 @@
 #pragma once
 
+#include <cstdint>
+#include <cassert>
+#include <cstdlib>
+
+#include <string>
+
+#include <unordered_map> //
+
 typedef char int8;
 typedef unsigned char uint8;
 typedef short int16;
