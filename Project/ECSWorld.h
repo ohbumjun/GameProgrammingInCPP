@@ -438,7 +438,7 @@ namespace decs {
 		*/
 
 		template<typename C>
-		void add_component(EntityID id);
+		C* add_component(EntityID id);
 
 		template<typename C>
 		void remove_component(EntityID id);
@@ -1186,7 +1186,7 @@ namespace decs {
 		// 자세히 보면, 지금 해당 함수는 entity 의 archetype 정보만 변경해줄 뿐
 		// component 데이터를 chunk 에 추가하거나 하는 작업은 없다.
 		template<typename C>
-		void add_component_to_entity(ECSWorld* world, EntityID id)
+		C* add_component_to_entity(ECSWorld* world, EntityID id)
 		{
 			const Metatype* temporalMetatypeArray[32];
 
@@ -1249,10 +1249,12 @@ namespace decs {
 
 						type->constructor(ptr);
 
-						break;
+						return (C*)ptr;
 					}
 				}
 			}
+
+			return nullptr;
 		}
 
 		/*
@@ -1635,9 +1637,9 @@ namespace decs {
 	*/
 
 	template<typename C>
-	void ECSWorld::add_component(EntityID id)
+	C* ECSWorld::add_component(EntityID id)
 	{
-		adv::add_component_to_entity<C>(this, id);
+		return adv::add_component_to_entity<C>(this, id);
 	}
 
 	template<typename C>

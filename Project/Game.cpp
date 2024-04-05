@@ -23,7 +23,7 @@
 #include "TransformECSComponent.h"
 #include "SpriteECSComponent.h"
 
-// #define USE_ECS 1
+#define USE_ECS 1
 
 const int entityNum = 10000;
 const int thickness = 15;
@@ -403,7 +403,7 @@ void Game::TestECS()
 		// world.add_component<TestComp>(et, TestComp{ 1 });
 		for (int i = 0; i < entityNum; i++) {
 			auto et = world.new_entity();
-			world.add_component<TransformECSComponent>(et);
+			TransformECSComponent* tcmp = world.add_component<TransformECSComponent>(et);
 			world.add_component<SpriteECSComponent>(et);
 			world.add_component<MoveECSComponent>(et);
 		}
