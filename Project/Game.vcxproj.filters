@@ -115,7 +115,16 @@
     <ClCompile Include="AssetAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Image.cpp">
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Prototype</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAssetLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -201,6 +210,11 @@
     </ClInclude>
     <ClInclude Include="AssetExtension.h" />
     <ClInclude Include="AssetAttribute.h" />
-    <ClInclude Include="Image.h" />
+    <ClInclude Include="Sprite.h">
+      <Filter>Source Files\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAsset.h" />
+    <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="SpriteAssetLoader.h" />
   </ItemGroup>
 </Project>

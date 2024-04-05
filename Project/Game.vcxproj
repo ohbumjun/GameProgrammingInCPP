@@ -15,6 +15,7 @@
     <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="AssetAttribute.cpp" />
     <ClCompile Include="AssetExtension.cpp" />
+    <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="BaseObject.cpp" />
@@ -26,7 +27,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FileId.cpp" />
     <ClCompile Include="Guid.cpp" />
-    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Asset.cpp" />
@@ -37,6 +38,8 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpookyHash.cpp" />
+    <ClCompile Include="SpriteAsset.cpp" />
+    <ClCompile Include="SpriteAssetLoader.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SpriteECSComponent.cpp" />
     <ClCompile Include="StateECSComponent.cpp" />
@@ -47,6 +50,7 @@
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="AssetAttribute.h" />
     <ClInclude Include="AssetExtension.h" />
+    <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="BaseObject.h" />
@@ -59,7 +63,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="FileId.h" />
     <ClInclude Include="Guid.h" />
-    <ClInclude Include="Image.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Asset.h" />
@@ -69,6 +73,8 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SpookyHash.h" />
+    <ClInclude Include="SpriteAsset.h" />
+    <ClInclude Include="SpriteAssetLoader.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SpriteECSComponent.h" />
     <ClInclude Include="StateECSComponent.h" />
