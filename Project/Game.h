@@ -8,6 +8,7 @@
 
 #pragma once
 #include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -32,7 +33,6 @@ public:
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
 
-	SDL_Texture* GetTexture(const std::string& fileName);
 	// Game-specific (add/remove asteroid)
 	void AddAsteroid(class Asteroid* ast);
 	void RemoveAsteroid(class Asteroid* ast);
@@ -46,16 +46,11 @@ private:
 	void LoadData();
 	void UnloadData();
 
+	class Renderer* mRenderer;
 
-	// Map of textures loaded
-	std::unordered_map<std::string, SDL_Texture*> mTextures;
-
-	// Window created by SDL
-	SDL_Window* mWindow;
-	// Renderer for 2D drawing
-	SDL_Renderer* mRenderer;
 	// Number of ticks since start of game
 	Uint32 mTicksCount;
+
 	// Game is still running
 	bool mIsRunning;
 

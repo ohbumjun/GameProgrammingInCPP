@@ -6,7 +6,12 @@
 
 #include <string>
 
-#include <unordered_map> //
+// ds
+#include <unordered_map>
+
+// util
+#include <algorithm>
+#include <typeinfo> // typeid
 
 typedef char int8;
 typedef unsigned char uint8;

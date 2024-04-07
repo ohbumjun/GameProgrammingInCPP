@@ -1,8 +1,15 @@
 #include "AssetExtension.h"
+#include "SpriteAsset.h"
+#include "Sprite.h"
 
-void AssetExtension::Initialize()
+std::unordered_map<size_t, AssetAttribute*> AssetExtension::_attributies;
+
+void AssetExtension::initialize()
 {
-	AssetAttribute imageAssetAttribute(AssetType::IMAGE, typeof());
+	size_t spritePrototype = typeid(Sprite).hash_code();
+	AssetAttribute* imageAssetAttribute = new AssetAttribute (AssetType::IMAGE, spritePrototype, spritePrototype,
+		".png");
+	_attributies[spritePrototype] = imageAssetAttribute;
 	/*
 	// Load the asset extension
 	if (!assetExtension.LoadFromFile("Data/Extensions/AssetExtension.xml"))
@@ -45,4 +52,13 @@ void AssetExtension::Initialize()
 		assetNode = assetNode->NextSibling("Asset");
 	}
 	*/
+}
+
+void AssetExtension::finalize()
+{
+	for (auto& attribute : _attributies)
+	{
+		delete attribute.second;
+	}
+	_attributies.clear();
 }

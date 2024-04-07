@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "Random.h"
 #include "CircleComponent.h"
+#include "AssetManager.h"
 
 Asteroid::Asteroid(Game* game)
 	:Actor(game)
@@ -26,7 +27,7 @@ Asteroid::Asteroid(Game* game)
 
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this);
-	sc->SetTexture(game->GetTexture("Assets/Asteroid.png"));
+	sc->SetTexture(AssetManager::GetTexture("Assets/Asteroid.png"));
 
 	// Create a move component, and set a forward speed
 	MoveComponent* mc = new MoveComponent(this);

@@ -27,6 +27,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FileId.cpp" />
     <ClCompile Include="Guid.cpp" />
+    <ClCompile Include="ProjectLoader.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Laser.cpp" />
@@ -43,6 +45,8 @@
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SpriteECSComponent.cpp" />
     <ClCompile Include="StateECSComponent.cpp" />
+    <ClCompile Include="TextureAssetManager.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="TransformECSComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +67,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="FileId.h" />
     <ClInclude Include="Guid.h" />
+    <ClInclude Include="ProjectLoader.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Laser.h" />
@@ -78,6 +84,8 @@
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SpriteECSComponent.h" />
     <ClInclude Include="StateECSComponent.h" />
+    <ClInclude Include="TextureAssetManager.h" />
+    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="TransformECSComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -153,6 +161,7 @@ xcopy "$(ProjectDir)\..\external\GLEW\lib\win\x86\*.dll" "$(OutDir)" /i /s /y</C
       <AdditionalIncludeDirectories>..\external\SDL\include;..\external\GLEW\include;..\external\SOIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

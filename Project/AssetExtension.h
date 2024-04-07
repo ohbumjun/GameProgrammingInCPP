@@ -5,10 +5,12 @@
 
 class AssetExtension
 {
-public :
-	static void Initialize();
+	friend class AssetManager;
 
-private :
-	static std::vector<AssetAttribute*> _attributies;
+	static void initialize();
+	static void finalize();
+
+	// static std::vector<AssetAttribute*> _attributies;
+	static std::unordered_map<size_t, AssetAttribute*> _attributies;
 };
 

@@ -1,6 +1,8 @@
 #include "FileId.h"
 #include "SpookyHash.h"
 
+std::unordered_map<uint32, FileId> IdentifierManager::_fileIdMap;
+
 FileId::FileId(const std::string& relationPath)
 {
 	const uint32 fileHash = SpookyHash::Hash32(relationPath.c_str(), relationPath.length(), 0);
