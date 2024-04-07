@@ -13,72 +13,23 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimSpriteComponent.cpp" />
-    <ClCompile Include="AssetAttribute.cpp" />
-    <ClCompile Include="AssetExtension.cpp" />
-    <ClCompile Include="AssetLoader.cpp" />
-    <ClCompile Include="AssetManager.cpp" />
-    <ClCompile Include="Asteroid.cpp" />
-    <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BGSpriteComponent.cpp" />
-    <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ECSComponent.cpp" />
-    <ClCompile Include="ECSWorld.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="FileId.cpp" />
-    <ClCompile Include="Guid.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="InputComponent.cpp" />
-    <ClCompile Include="Laser.cpp" />
-    <ClCompile Include="Asset.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="MoveComponent.cpp" />
-    <ClCompile Include="MoveECSComponent.cpp" />
-    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ship.cpp" />
-    <ClCompile Include="SpookyHash.cpp" />
-    <ClCompile Include="SpriteAsset.cpp" />
-    <ClCompile Include="SpriteAssetLoader.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="SpriteECSComponent.cpp" />
-    <ClCompile Include="StateECSComponent.cpp" />
-    <ClCompile Include="TransformECSComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimSpriteComponent.h" />
-    <ClInclude Include="AssetAttribute.h" />
-    <ClInclude Include="AssetExtension.h" />
-    <ClInclude Include="AssetLoader.h" />
-    <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="Asteroid.h" />
-    <ClInclude Include="BaseObject.h" />
     <ClInclude Include="BGSpriteComponent.h" />
-    <ClInclude Include="CircleComponent.h" />
-    <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="ECSComponent.h" />
-    <ClInclude Include="ECSWorld.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="FileId.h" />
-    <ClInclude Include="Guid.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="InputComponent.h" />
-    <ClInclude Include="Laser.h" />
-    <ClInclude Include="Asset.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="MoveComponent.h" />
-    <ClInclude Include="MoveECSComponent.h" />
-    <ClInclude Include="Random.h" />
     <ClInclude Include="Ship.h" />
-    <ClInclude Include="SpookyHash.h" />
-    <ClInclude Include="SpriteAsset.h" />
-    <ClInclude Include="SpriteAssetLoader.h" />
     <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="SpriteECSComponent.h" />
-    <ClInclude Include="StateECSComponent.h" />
-    <ClInclude Include="TransformECSComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC508D87-495F-4554-932D-DD68388B63CC}</ProjectGuid>
@@ -90,15 +41,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
