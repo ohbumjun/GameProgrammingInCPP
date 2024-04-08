@@ -118,13 +118,7 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Prototype</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteAsset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AssetLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteAssetLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProjectLoader.cpp">
@@ -133,13 +127,22 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CircleECSComponent.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAsset.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAssetLoader.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
     <ClCompile Include="TextureAssetManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Asset</Filter>
     </ClCompile>
     <ClCompile Include="TextureLoader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="CircleECSComponent.cpp">
+    <ClCompile Include="InputECSComponent.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="TextureLoader.h">
       <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="InputECSComponent.h">
+      <Filter>Source Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

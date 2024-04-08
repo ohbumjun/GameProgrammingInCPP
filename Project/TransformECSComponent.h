@@ -6,6 +6,7 @@
 class TransformECSComponent  : public ECSComponent
 {
 public :
+	TransformECSComponent();
 	virtual void Update(float deltaTime) override{};
 	
 	const Vector2& GetPosition() const { return mPosition; }

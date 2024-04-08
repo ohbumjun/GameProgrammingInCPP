@@ -1,5 +1,12 @@
 #include "TransformECSComponent.h"
 
+TransformECSComponent::TransformECSComponent() :
+	mPosition(Vector2::Zero)
+	, mScale(1.0f)
+	, mRotation(0.0f)
+{
+}
+
 Vector2 TransformECSComponent::GetForward() const
 {
 	// Convert Angle to Forward Vector

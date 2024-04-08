@@ -36,6 +36,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FileId.cpp" />
     <ClCompile Include="Guid.cpp" />
+    <ClCompile Include="InputECSComponent.cpp" />
     <ClCompile Include="ProjectLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="FileId.h" />
     <ClInclude Include="Guid.h" />
+    <ClInclude Include="InputECSComponent.h" />
     <ClInclude Include="ProjectLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sprite.h" />

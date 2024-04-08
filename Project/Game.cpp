@@ -196,7 +196,7 @@ void Game::UpdateGame()
 	// ship
 	// mShip->Update(deltaTime);
 #else
-	// Update all actors
+	// Update all actors //
 	mUpdatingActors = true;
 	for (auto actor : mActors)
 	{
@@ -329,7 +329,18 @@ void Game::TestECS()
 			moveCmp->SetForwardSpeed(150.0f);
 		}
 
-		// ship 은 일단 만들지 않기 
+		// ship
+		auto shipEt = mWorld.new_entity();
+
+		TransformECSComponent* tcmp = mWorld.add_component<TransformECSComponent>(shipEt);
+		tcmp->Initialize(&mWorld, shipEt);
+		tcmp->SetPosition(Vector2(512.0f, 384.0f)); // 화면 중앙에 위치시키기
+		tcmp->SetRotation(Math::PiOver2);
+
+		SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(shipEt);
+		spCmp->Initialize(&mWorld, shipEt);
+		spCmp->SetDrawOrder(150);
+		spCmp->SetTexture(AssetManager::GetTexture("Assets/Ship.png"));
 	}
 	
 }
