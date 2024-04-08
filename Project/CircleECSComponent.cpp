@@ -6,6 +6,10 @@ CircleECSComponent::CircleECSComponent() :
 {
 }
 
+void CircleECSComponent::Update(float deltaTime)
+{
+}
+
 float CircleECSComponent::GetRadius() const
 {
     TransformECSComponent& transform = mWorld->get_component<TransformECSComponent>(mEntity);

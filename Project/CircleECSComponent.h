@@ -5,8 +5,9 @@
 
 class CircleECSComponent : public ECSComponent
 {
+public :
 	CircleECSComponent();
-
+	void Update(float deltaTime) override;
 	void SetRadius(float radius) { mRadius = radius; }
 	float GetRadius() const;
 

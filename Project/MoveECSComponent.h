@@ -7,7 +7,7 @@ class MoveECSComponent : public ECSComponent
 public :
 	void Update(float deltaTime) override;
 
-	MoveECSComponent() = default;
+	MoveECSComponent() {};
 	float GetAngularSpeed() const { return mAngularSpeed; }
 	float GetForwardSpeed() const { return mForwardSpeed; }
 	void SetAngularSpeed(float speed) { mAngularSpeed = speed; }

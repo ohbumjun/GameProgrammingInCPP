@@ -15,6 +15,12 @@
 #include <vector>
 #include "ECSWorld.h"
 
+// ECS
+#include "MoveECSComponent.h"
+#include "TransformECSComponent.h"
+#include "SpriteECSComponent.h"
+#include "CircleECSComponent.h"
+
 // Game class
 class Game
 {
@@ -73,5 +79,6 @@ private:
 
 	// ECS Test
 	void TestECS();
-	decs::ECSWorld world{};
+	void TestUpdateMoveComponent(MoveECSComponent* comp);
+	decs::ECSWorld mWorld{};
 };

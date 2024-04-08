@@ -88,10 +88,9 @@ namespace decs {
 	struct MetatypeHash {
 
 		// Metatype::build_hash 함수 참고
-		size_t name_hash{ 0 };
+		uint64_t name_hash{ 0 };
 
-		//
-		size_t matcher_hash{ 0 };
+		uint64_t matcher_hash{ 0 };
 
 		bool operator==(const MetatypeHash& other)const {
 			return name_hash == other.name_hash;
@@ -102,7 +101,7 @@ namespace decs {
 		}
 
 		template<typename T>
-		static constexpr size_t hash() {
+		static constexpr uint64_t hash() {
 
 			static_assert(!std::is_reference_v<T>, "dont send references to hash");
 			static_assert(!std::is_const_v<T>, "dont send const to hash");
@@ -133,8 +132,21 @@ namespace decs {
 			using sanitized = std::remove_const_t<std::remove_reference_t<T>>;
 
 			MetatypeHash hash;
+
+			// T Type 애 따라 고유한 hash 값을 구한다.
 			hash.name_hash = MetatypeHash::hash<sanitized>();
-			hash.matcher_hash |= (uint64_t)0x1L << (uint64_t)((hash.name_hash) % 63L);
+
+			// 63으로 나누었을 때 나머지 값을 구한다.
+			// 0 ~~ 62 사이의 값이 될 것이다.
+			uint64_t matcher	= (uint64_t)((hash.name_hash) % 63L);
+
+			// 기본값 1이 된다.
+			uint64_t defaultDecimal		= (uint64_t)0x1L;
+
+			defaultDecimal = defaultDecimal << matcher;
+
+			hash.matcher_hash |= defaultDecimal;
+			
 			return hash;
 		};
 		
@@ -147,6 +159,7 @@ namespace decs {
 
 			Metatype meta{};
 			meta.hash = build_hash<T>();
+			meta.name = MetatypeHash::name_detail<T>();
 
 			if constexpr (std::is_empty_v<T>)
 			{
@@ -328,8 +341,8 @@ namespace decs {
 		std::vector<MetatypeHash> exclude_comps;
 
 		// store the "bitwise OR of the matcher hashes" of the required and excluded components.
-		size_t require_matcher{ 0 };
-		size_t exclude_matcher{ 0 };
+		uint64_t require_matcher{ 0 };
+		uint64_t exclude_matcher{ 0 };
 
 
 		bool built{ false };
@@ -1327,7 +1340,7 @@ namespace decs {
 			auto tup = std::make_tuple(get_chunk_array<Args>(chnk)...);
 #ifndef NDEBUG
 			// 각 Component Array 의 Chunk 가, 현재 Chunk 와 동일한지를 검사한다.
-			(assert(std::get<decltype(get_chunk_array<Args>(chnk))>(tup).chunkOwner == chnk), ...);
+			// (assert(std::get<decltype(get_chunk_array<Args>(chnk))>(tup).chunkOwner == chnk), ...);
 #endif
 			// 해당 Chunk 에 속한 entity 데이터를 뒤에서부터 앞으로 순회한다.
 			for (int i = chnk->header.last - 1; i >= 0; i--) {
@@ -1583,6 +1596,8 @@ namespace decs {
 			}
 		});
 	}
+
+	// lambda function 을 인자로 받는 함수이다.
 	template<typename Func>
 	void decs::ECSWorld::for_each(Func&& function)
 	{

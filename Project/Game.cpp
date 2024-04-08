@@ -21,12 +21,8 @@
 #include "Random.h"
 #include <chrono>
 
-// ECS
-#include "MoveECSComponent.h"
-#include "TransformECSComponent.h"
-#include "SpriteECSComponent.h"
 
-// #define USE_ECS 1
+#define USE_ECS 1
 
 const int entityNum = 100000;
 const int thickness = 15;
@@ -190,7 +186,11 @@ void Game::UpdateGame()
 	mTicksCount = SDL_GetTicks();
 
 #ifdef USE_ECS
-	
+	// aestroid
+	mWorld.for_each([&](MoveECSComponent& comp) {comp.Update(deltaTime);});
+
+	// ship
+	// mShip->Update(deltaTime);
 #else
 	// Update all actors
 	mUpdatingActors = true;
@@ -278,16 +278,22 @@ void Game::UnloadData()
 void Game::TestECS()
 {
 	{
-		// auto et = world.new_entity();
-		// world.add_component<TestComp>(et, TestComp{ 1 });
+		// asetroid
 		for (int i = 0; i < entityNum; i++) {
-			auto et = world.new_entity();
-			TransformECSComponent* tcmp = world.add_component<TransformECSComponent>(et);
-			SpriteECSComponent* spCmp = world.add_component<SpriteECSComponent>(et);
-			MoveECSComponent* moveCmp = world.add_component<MoveECSComponent>(et);
+			auto et = mWorld.new_entity();
+			TransformECSComponent* tcmp = mWorld.add_component<TransformECSComponent>(et);
+			SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(et);
+			CircleECSComponent* circleCmp = mWorld.add_component<CircleECSComponent>(et);
+			MoveECSComponent* moveCmp = mWorld.add_component<MoveECSComponent>(et);
 		}
+
+		// ship 은 일단 만들지 않기 
 	}
 	
+}
+
+void Game::TestUpdateMoveComponent(MoveECSComponent* comp)
+{
 }
 
 void Game::Shutdown()
