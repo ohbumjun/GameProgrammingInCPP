@@ -127,6 +127,21 @@
     <ClCompile Include="SpriteAssetLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleECSComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -216,5 +231,10 @@
     <ClInclude Include="SpriteAsset.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="SpriteAssetLoader.h" />
+    <ClInclude Include="ProjectLoader.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="TextureAssetManager.h" />
+    <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="CircleECSComponent.h" />
   </ItemGroup>
 </Project>

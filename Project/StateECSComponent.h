@@ -12,6 +12,8 @@ public:
 		EDead
 	};
 
+	virtual void Update(float deltaTime) override;
+
 	StateECSComponent() = default;
 	~StateECSComponent() = default;
 

@@ -21,6 +21,7 @@
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BGSpriteComponent.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
+    <ClCompile Include="CircleECSComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ECSComponent.cpp" />
     <ClCompile Include="ECSWorld.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="BGSpriteComponent.h" />
     <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="CircleECSComponent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ECSComponent.h" />

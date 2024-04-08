@@ -473,7 +473,6 @@ namespace decs {
 		inline EntityID erase_entity_in_chunk(DataChunk* chunk, uint16_t index);
 		inline DataChunk* build_chunk(ChunkComponentList* cmpList);
 
-
 		// type_list is a simple template that takes a variadic list of types. 
 		// It's used to represent a list of types.
 		// it's just a way to group together types in template meta programming
@@ -487,7 +486,6 @@ namespace decs {
 		// 즉, 해당 함수의 파라미터 타입들을, type_list 라는 구조체 형태로 리턴시켜주는 것이다.
 		template<typename Class, typename Ret, typename... Args>
 		type_list<Args...> args(Ret(Class::*)(Args...) const);
-
 
 		// 템플릿 인자 T 에 대한 MetaType 정보를 만들어주는 함수
 		template<typename T>
@@ -540,7 +538,6 @@ namespace decs {
 			}();
 			return mt;
 		}
-
 
 		//reorder archetype with the fullness
 		inline void set_chunk_full(DataChunk* chunk) {
@@ -839,7 +836,6 @@ namespace decs {
 			return newArch;
 		}
 
-
 		inline EntityID allocate_entity(ECSWorld* world) {
 			// 일단 새로운 Entity ID 를 만든다.
 			EntityID newID;
@@ -931,7 +927,6 @@ namespace decs {
 			}
 			return targetChunk;
 		}
-
 
 		inline void move_entity_to_archetype(Archetype* newarch, EntityID id, bool bInitializeConstructors = true) {
 
@@ -1053,7 +1048,6 @@ namespace decs {
 			return world->entities[id.index].chunk->header.ownerArchetype;
 		}
 
-
 		template<typename C>
 		bool has_component(ECSWorld* world, EntityID id);
 
@@ -1160,8 +1154,6 @@ namespace decs {
 
 		}
 
-
-
 		template<typename C>
 		C& get_entity_component(ECSWorld* world, EntityID id)
 		{
@@ -1172,7 +1164,6 @@ namespace decs {
 			assert(acrray.chunkOwner != nullptr);
 			return acrray[storage.chunkIndex];
 		}
-
 
 		template<typename C>
 		bool has_component(ECSWorld* world, EntityID id)
@@ -1347,7 +1338,6 @@ namespace decs {
 			}
 		}
 
-
 		template<typename ...Args, typename Func>
 		void unpack_chunk(type_list<Args...> types, DataChunk* chunk, Func&& function) {
 			entity_chunk_iterate<Args...>(chunk, function);
@@ -1356,10 +1346,6 @@ namespace decs {
 		Query& unpack_querywith(type_list<Args...> types, Query& query) {
 			return query.with<Args...>();
 		}
-
-
-
-
 
 		inline int insert_entity_in_chunk(DataChunk* chunk, EntityID EID, bool bInitializeConstructors) {
 			int index = -1;

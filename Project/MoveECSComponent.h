@@ -2,9 +2,11 @@
 
 #include "ECSComponent.h"
 
-class MoveECSComponent
+class MoveECSComponent : public ECSComponent
 {
 public :
+	void Update(float deltaTime) override;
+
 	MoveECSComponent() = default;
 	float GetAngularSpeed() const { return mAngularSpeed; }
 	float GetForwardSpeed() const { return mForwardSpeed; }

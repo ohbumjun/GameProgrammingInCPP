@@ -28,7 +28,7 @@
 
 // #define USE_ECS 1
 
-const int entityNum = 10000;
+const int entityNum = 100000;
 const int thickness = 15;
 const float paddleH = 100.0f;
 
@@ -84,8 +84,6 @@ bool Game::Initialize()
 
 	return true;
 }
-
-
 
 void Game::RunLoop()
 {
@@ -191,6 +189,9 @@ void Game::UpdateGame()
 	// 이전 frame 에서의 SDL_GetTicks() 를 계산하고, 다음 frame 에서의 SDL_GetTicks 값과 비교하여 delta 를 구한다.
 	mTicksCount = SDL_GetTicks();
 
+#ifdef USE_ECS
+	
+#else
 	// Update all actors
 	mUpdatingActors = true;
 	for (auto actor : mActors)
@@ -220,7 +221,8 @@ void Game::UpdateGame()
 	for (auto actor : deadActors)
 	{
 		delete actor;
-	}
+}
+#endif
 }
 
 void Game::GenerateOutput()
@@ -228,11 +230,20 @@ void Game::GenerateOutput()
 	Renderer::preRender();
 	
 	// Draw all sprite components
-	for (auto sprite : mSprites)
-	{
-		sprite->Draw(Renderer::GetRenderer());
-	}
+	// for (auto sprite : mSprites)
+	// {
+	// 	sprite->Draw(Renderer::GetRenderer());
+	// }
 	
+	for (auto spriteInfo : mSprites)
+	{
+		const std::list<class SpriteComponent*>& sprites = spriteInfo.second;
+
+		for (auto sprite : sprites)
+		{
+			sprite->Draw(Renderer::GetRenderer());
+		}
+	}
 
 	Renderer::postRender();
 }
@@ -266,7 +277,6 @@ void Game::UnloadData()
 
 void Game::TestECS()
 {
-	struct TestComp { int i; };
 	{
 		// auto et = world.new_entity();
 		// world.add_component<TestComp>(et, TestComp{ 1 });
@@ -329,27 +339,48 @@ void Game::AddSprite(SpriteComponent* sprite)
 	// 즉, SpriteComponent 의 DrawOrder 에 맞춰 순서대로 대상들을 그려내기 위해서
 	// 정렬을 시켜주는 것이다.
 	// 이를 통해 GenerateOutput함수는 그저 m_Sprites 를 순회하면서 그려내기만 하면 된다.
+	
+	// int myDrawOrder = sprite->GetDrawOrder();
+	// auto iter = mSprites.begin();
+	// for (;
+	// 	iter != mSprites.end();
+	// 	++iter)
+	// {
+	// 	if (myDrawOrder < (*iter)->GetDrawOrder())
+	// 	{
+	// 		break;
+	// 	}
+	// }
+	// 
+	// // Inserts element before position of iterator
+	// mSprites.insert(iter, sprite);
+
 	int myDrawOrder = sprite->GetDrawOrder();
-	auto iter = mSprites.begin();
-	for (;
-		iter != mSprites.end();
-		++iter)
+
+	if (mSprites.find(myDrawOrder) == mSprites.end())
 	{
-		if (myDrawOrder < (*iter)->GetDrawOrder())
-		{
-			break;
-		}
+		mSprites.insert(std::make_pair(myDrawOrder, std::list<SpriteComponent*>()));
 	}
 
-	// Inserts element before position of iterator
-	mSprites.insert(iter, sprite);
+	mSprites[myDrawOrder].emplace_back(sprite);
 }
 
 void Game::RemoveSprite(SpriteComponent* sprite)
 {
+	int order = sprite->GetDrawOrder();
+
 	// (We can't swap because it ruins ordering)
-	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
-	mSprites.erase(iter);
+	// auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	// mSprites.erase(iter);
+
+	std::list<class SpriteComponent*>& spriteList = mSprites[order];
+
+	auto iter = std::find(spriteList.begin(), spriteList.end(), sprite);
+
+	if (iter != spriteList.end())
+	{
+  		spriteList.erase(iter);
+	}
 }
 
 void Game::AddAsteroid(Asteroid* ast)

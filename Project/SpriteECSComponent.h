@@ -11,6 +11,7 @@ public:
 	SpriteECSComponent() = default;
 	~SpriteECSComponent() = default;
 
+	virtual void Update(float deltaTime) override {};
 	virtual void Draw(SDL_Renderer* renderer);
 	virtual void SetTexture(SDL_Texture* texture);
 

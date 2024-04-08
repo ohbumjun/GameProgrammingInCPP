@@ -9,6 +9,7 @@
 #pragma once
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include <map>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -60,7 +61,8 @@ private:
 	std::vector<class Actor*> mPendingActors;
 
 	// All the sprite components drawn
-	std::vector<class SpriteComponent*> mSprites;
+	// std::list<class SpriteComponent*> mSprites;
+	std::map<int, std::list<class SpriteComponent*>> mSprites;
 
 	// Track if we're updating actors right now
 	bool mUpdatingActors;
