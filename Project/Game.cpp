@@ -232,12 +232,21 @@ void Game::GenerateOutput()
 {
 	Renderer::preRender();
 	
+#ifdef USE_ECS
+	// aestroid
+	SDL_Renderer* renderer = Renderer::GetRenderer();
+
+	mWorld.for_each([&](SpriteECSComponent& comp)
+	{
+		comp.Draw(renderer);
+});
+#else
 	// Draw all sprite components
 	// for (auto sprite : mSprites)
 	// {
 	// 	sprite->Draw(Renderer::GetRenderer());
 	// }
-	
+
 	for (auto spriteInfo : mSprites)
 	{
 		const std::list<class SpriteComponent*>& sprites = spriteInfo.second;
@@ -247,6 +256,9 @@ void Game::GenerateOutput()
 			sprite->Draw(Renderer::GetRenderer());
 		}
 	}
+#endif // USE_ECS
+
+	
 
 	Renderer::postRender();
 }
@@ -283,23 +295,35 @@ void Game::TestECS()
 	{
 		// asetroid
 		for (int i = 0; i < entityNum; i++) {
+			// 아리에서는 Aestroid 생성자에서 세팅해준 일을 진행해야 한다.
+			
 			auto et = mWorld.new_entity();
 
 			// TransformECSComponent 만 들어있는 ArcheType 만들어진다.
 			TransformECSComponent* tcmp = mWorld.add_component<TransformECSComponent>(et);
 			tcmp->Initialize(&mWorld, et);
 
+			// Initialize to random position/orientation
+			Vector2 randPos = Random::GetVector(Vector2::Zero,
+				Vector2(1024.0f, 768.0f));
+
+			tcmp->SetPosition(randPos);
+			tcmp->SetRotation(Random::GetFloatRange(0.0f, Math::TwoPi));
+
 			// TransformECSComp + SpriteECSComponent
 			SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(et);
 			spCmp->Initialize(&mWorld, et);
+			spCmp->SetTexture(AssetManager::GetTexture("Assets/Asteroid.png"));
 
 			// TransformECSComp + SpriteECSComponent +  CircleECSComponent
 			CircleECSComponent* circleCmp = mWorld.add_component<CircleECSComponent>(et);
 			circleCmp->Initialize(&mWorld, et);
+			circleCmp->SetRadius(40.0f);
 
 			// TransformECSComp + SpriteECSComponent +  CircleECSComponent + MoveECSComponent
 			MoveECSComponent* moveCmp = mWorld.add_component<MoveECSComponent>(et);
 			moveCmp->Initialize(&mWorld, et);
+			moveCmp->SetForwardSpeed(150.0f);
 		}
 
 		// ship 은 일단 만들지 않기 
