@@ -15,6 +15,7 @@ public:
 	virtual void Draw(SDL_Renderer* renderer);
 	virtual void SetTexture(SDL_Texture* texture);
 
+	void SetDrawOrder(int order) { mDrawOrder = order; }
 	int GetDrawOrder() const { return mDrawOrder; }
 	int GetTexHeight() const { return mTexHeight; }
 	int GetTexWidth() const { return mTexWidth; }

@@ -239,7 +239,8 @@ void Game::GenerateOutput()
 	mWorld.for_each([&](SpriteECSComponent& comp)
 	{
 		comp.Draw(renderer);
-});
+	});
+	
 #else
 	// Draw all sprite components
 	// for (auto sprite : mSprites)
@@ -313,6 +314,7 @@ void Game::TestECS()
 			// TransformECSComp + SpriteECSComponent
 			SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(et);
 			spCmp->Initialize(&mWorld, et);
+			spCmp->SetDrawOrder(100);
 			spCmp->SetTexture(AssetManager::GetTexture("Assets/Asteroid.png"));
 
 			// TransformECSComp + SpriteECSComponent +  CircleECSComponent

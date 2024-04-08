@@ -140,7 +140,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircleECSComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,18 +223,34 @@
     <ClInclude Include="Math.h">
       <Filter>Source Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="AssetExtension.h" />
-    <ClInclude Include="AssetAttribute.h" />
     <ClInclude Include="Sprite.h">
       <Filter>Source Files\Prototype</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteAsset.h" />
-    <ClInclude Include="AssetLoader.h" />
-    <ClInclude Include="SpriteAssetLoader.h" />
     <ClInclude Include="ProjectLoader.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="TextureAssetManager.h" />
-    <ClInclude Include="TextureLoader.h" />
-    <ClInclude Include="CircleECSComponent.h" />
+    <ClInclude Include="CircleECSComponent.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetAttribute.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetExtension.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAsset.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAssetLoader.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureAssetManager.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
