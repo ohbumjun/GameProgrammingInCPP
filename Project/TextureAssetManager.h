@@ -3,7 +3,7 @@
 #include "Common.h"
 #include "SDL/SDL.h"
 
-class SDL_Texture;
+struct SDL_Texture;
 
 class TextureAssetManager
 {

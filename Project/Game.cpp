@@ -24,7 +24,8 @@
 
 #define USE_ECS 1
 
-const int entityNum = 100000;
+// const int entityNum = 100000;
+const int entityNum = 1;
 const int thickness = 15;
 const float paddleH = 100.0f;
 
@@ -91,7 +92,7 @@ void Game::RunLoop()
 		UpdateGame();
 
 		auto end_time = std::chrono::high_resolution_clock::now();
-		// Calculate elapsed time in milliseconds
+		// Calculate elapsed time in milliseconds //
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
 
 		GenerateOutput();
@@ -187,9 +188,9 @@ void Game::UpdateGame()
 
 #ifdef USE_ECS
 	// aestroid
-	mWorld.for_each([&](MoveECSComponent& comp) 
+	mWorld.for_each([&](MoveECSComponent& moveComp, SpriteECSComponent& spriteComp)
 	{
-		comp.Update(deltaTime);
+		moveComp.Update(deltaTime);
 	});
 
 	// ship

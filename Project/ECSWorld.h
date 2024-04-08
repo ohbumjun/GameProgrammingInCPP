@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <cassert>
 #include <algorithm>
+#include <memory>
 #include <unordered_map>
 
 // https://github.com/vblanco20-1/decs
@@ -230,6 +231,7 @@ namespace decs {
 	// enabling faster access.
 	// 자. 아래 storage 를 반드시 첫번째 변수로 둬야 한ㄷ.
 	// DataChunk 의 시작 주소가, storage 와 동일하게 해야 한다.
+	// struct alignas(32) DataChunk {
 	struct alignas(32) DataChunk {
 		// 실제 데이터 크기는, BLOCK_MEMORY_16K - Header 크기만큼 한다.
 		byte storage[BLOCK_MEMORY_16K - sizeof(DataChunkHeader)];
@@ -305,7 +307,7 @@ namespace decs {
 	struct Archetype {
 		ChunkComponentList* componentList;
 		struct ECSWorld* ownerWorld;
-		size_t componentHash;
+		uint64_t componentHash;
 		// (참고) set_chunk_full
 		// 해당 ArcheType 이 들고 있는 DataChunk 들 중에서 full 로 찬 DataChunk 가 몇개인가.
 		int full_chunks;
@@ -686,15 +688,15 @@ namespace decs {
 			// offset 이 적정크기 ? DataChunk 의 크기를 넘으면 안된다. 
 			assert(offsets <= BLOCK_MEMORY_16K);
 
-			list->chunkCapacity = itemCount;
+			list->chunkCapacity = (int16_t)itemCount;
 
 			return list;
 		}
 
-		inline size_t build_signature(const Metatype** types, size_t count) {
+		inline uint64_t build_signature(const Metatype** types, size_t count) {
 			uint64_t and_hash = 0;
 			//for (auto m : types)
-			for (int i = 0; i < count; i++)
+			for (size_t i = 0; i < count; i++)
 			{
 				//consider if the fancy hash is needed, there is a big slowdown
 				//size_t keyhash = ash_64_fnv1a(&types[i]->name_hash, sizeof(size_t));
@@ -722,7 +724,7 @@ namespace decs {
 
 			// 현재 지우고자 하는 chunk 가, 맨 마지막 chunk 가 아니라면
 			if (backChunk != chunk) {
-				for (int i = 0; i < owner->chunks.size(); i++) {
+				for (size_t i = 0; i < owner->chunks.size(); i++) {
 					if (owner->chunks[i] == chunk) {
 						// 현재 지우는 chunk 위치에, 가장 마지막 chunk 를 세팅한다.
 						owner->chunks[i] = backChunk;
@@ -773,7 +775,7 @@ namespace decs {
 			});
 		}
 		inline bool is_sorted(const Metatype** types, size_t count) {
-			for (int i = 0; i < count - 1; i++) {
+			for (size_t i = 0; i < count - 1; i++) {
 				if (types[i] > types[i + 1]) {
 					return false;
 				}
@@ -791,7 +793,7 @@ namespace decs {
 			const Metatype** typelist;
 
 			if (false) {//!is_sorted(types, count)) {
-				for (int i = 0; i < count; i++) {
+				for (size_t i = 0; i < count; i++) {
 					temporalMetatypeArray[i] = types[i];
 
 				}
@@ -814,7 +816,7 @@ namespace decs {
 			if (iter != world->archetype_signature_map.end()) {
 
 				auto& archvec = iter->second;//world->archetype_signature_map[matcher];
-				for (int i = 0; i < archvec.size(); i++) {
+				for (size_t i = 0; i < archvec.size(); i++) {
 
 					auto componentList = archvec[i]->componentList;
 					int ccount = componentList->components.size();
@@ -1083,7 +1085,7 @@ namespace decs {
 			// vector 형태로 모여있다.
 			// 해당 변수를 순회한다는 것은, 모든 world 에 존재하는 모든 archetype 을
 			// 순회하겠다는 의미이다.
-			for (int i = 0; i < world->archetypeSignatures.size(); i++)
+			for (size_t i = 0; i < world->archetypeSignatures.size(); i++)
 			{
 				//if there is a good match, doing an and not be 0
 				// require_matcher 와 exclude_matcher 를 이용하여 & bit 연산을 수행한다.
@@ -1117,7 +1119,7 @@ namespace decs {
 						//dumb algo, optimize later		
 						// 그러면, 현재 내가 제외하고자 하는 component type 목록을
 						// 모두 순회한다.					
-						for (int mtA = 0; mtA < query.exclude_comps.size(); mtA++) {
+						for (size_t mtA = 0; mtA < query.exclude_comps.size(); mtA++) {
 
 							// 그리고, archetype 이 가지고 있는 component type 목록들도 순회를 한다.
 							for (auto cmp : componentList->components) {
@@ -1146,7 +1148,7 @@ namespace decs {
 
 					// require_comp 와 archetype component type 을 다 비교하면서
 					// match count 개수를 센다.
-					for (int mtA = 0; mtA < query.require_comps.size(); mtA++) {
+					for (size_t mtA = 0; mtA < query.require_comps.size(); mtA++) {
 
 						for (auto cmp : componentList->components) {
 
@@ -1212,7 +1214,7 @@ namespace decs {
 			int lenght = oldlist->components.size();
 
 			// 기존 Archetype 목록 중에서, 현재 Add하고자 하는 component type 이 있는지 검사한다.
-			for (int i = 0; i < oldlist->components.size(); i++) {
+			for (size_t i = 0; i < oldlist->components.size(); i++) {
 				temporalMetatypeArray[i] = oldlist->components[i].type;
 
 				//the pointers for metatypes are allways fully stable

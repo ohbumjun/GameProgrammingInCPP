@@ -1,9 +1,6 @@
 #pragma once
 #include "SDL/SDL.h"
 
-class SDL_Renderer;
-class SDL_Window;
-
 class Renderer
 {
 public :

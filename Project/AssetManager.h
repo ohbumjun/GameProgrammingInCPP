@@ -5,7 +5,7 @@
 #include "Guid.h"
 #include "TextureAssetManager.h"
 
-class SDL_Texture;
+struct SDL_Texture;
 
 class AssetManager
 {
