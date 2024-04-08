@@ -187,7 +187,10 @@ void Game::UpdateGame()
 
 #ifdef USE_ECS
 	// aestroid
-	mWorld.for_each([&](MoveECSComponent& comp) {comp.Update(deltaTime);});
+	mWorld.for_each([&](MoveECSComponent& comp) 
+	{
+		comp.Update(deltaTime);
+	});
 
 	// ship
 	// mShip->Update(deltaTime);
@@ -281,10 +284,22 @@ void Game::TestECS()
 		// asetroid
 		for (int i = 0; i < entityNum; i++) {
 			auto et = mWorld.new_entity();
+
+			// TransformECSComponent 만 들어있는 ArcheType 만들어진다.
 			TransformECSComponent* tcmp = mWorld.add_component<TransformECSComponent>(et);
+			tcmp->Initialize(&mWorld, et);
+
+			// TransformECSComp + SpriteECSComponent
 			SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(et);
+			spCmp->Initialize(&mWorld, et);
+
+			// TransformECSComp + SpriteECSComponent +  CircleECSComponent
 			CircleECSComponent* circleCmp = mWorld.add_component<CircleECSComponent>(et);
+			circleCmp->Initialize(&mWorld, et);
+
+			// TransformECSComp + SpriteECSComponent +  CircleECSComponent + MoveECSComponent
 			MoveECSComponent* moveCmp = mWorld.add_component<MoveECSComponent>(et);
+			moveCmp->Initialize(&mWorld, et);
 		}
 
 		// ship 은 일단 만들지 않기 

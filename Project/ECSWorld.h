@@ -247,6 +247,9 @@ namespace decs {
 			// 해당 Component 의 고유한 Hash 정보
 			MetatypeHash hash;
 			uint32_t chunkOffset;
+
+			// Debug 용
+			const char* compName;
 		};
 
 		// 몇개 set 가 들어가있는가
@@ -368,7 +371,7 @@ namespace decs {
 			};
 
 			auto build_matcher = [](const std::vector<MetatypeHash>& types) {
-				size_t and_hash = 0;
+				uint64_t and_hash = 0;
 
 				for (auto type : types)
 				{
@@ -405,17 +408,19 @@ namespace decs {
 		// 1) 여기서 '0' 이라는 것은...'0'개 set 가 들어있는 ArcheType들..이라는 의미인가?
 		// 2) find_or_create_archetype 함수를 보면, component 의 hash 값들을 합쳐서 matcher 라는 uint64_t 를 만든다.
 		//    즉, key 는, hash 조합에 해당하는 값으로 보인다.
+		// 그리고 이 hash 값은, 중복될 수 있는 것으로 보인다.
 		std::unordered_map<uint64_t, std::vector<Archetype*>> archetype_signature_map{};
-		std::unordered_map<uint64_t, Archetype*> archetype_map{};
 
 		// 여러개의 archetype들을 vector 형태로 관리하는 것으로 보인다.
 		// (ECSWorld 생성자에서는 nullArche 를 만든다.)
 		std::vector<Archetype*> archetypes;
+
 		//unique archetype hashes
-		std::vector<size_t> archetypeHashes;
-		//bytemask hash for checking
+		std::vector<uint64_t> archetypeHashes;
+
+		//	bytemask hash for checking
 		// archetype_signature_map 의 key 값들을, 또 다시 vector 형태로 저장한다.
-		std::vector<size_t> archetypeSignatures;
+		std::vector<uint64_t> archetypeSignatures;
 
 		std::unordered_map<uint64_t, void*> singleton_map{};
 
@@ -507,7 +512,7 @@ namespace decs {
 			// static local 변수를 활용한다.
 			// 아래 변수는, 람다 함수를 정의 + 호출. 까지 한꺼번에 포함된 것이다.
 			static const Metatype* mt = []() {
-				constexpr size_t name_hash = Metatype::build_hash<T>().name_hash;
+				constexpr uint64_t name_hash = Metatype::build_hash<T>().name_hash;
 
 				auto type = metatype_cache.find(name_hash);
 				if (type == metatype_cache.end()) {
@@ -666,7 +671,7 @@ namespace decs {
 				// 담은 CmpPair 라는 정보를 모아서 세팅하는 것으로 보인다.
 				// ex) Transform, Name, Move 가 있다고 한다면
 				// Chunk 에는 [Transform, Transform...][Name, Name...][Move, Move...] 순서 형태로 저장하겠다는 의미이다.
-				list->components.push_back({ type,type->hash,offsets });
+				list->components.push_back({ type,type->hash,offsets, type->name });
 
 				// 마찬가지로 align 을 요구하면
 				// itemCount 개수 * size 만큼 offset 을 증가시켜준다.
@@ -687,7 +692,7 @@ namespace decs {
 		}
 
 		inline size_t build_signature(const Metatype** types, size_t count) {
-			size_t and_hash = 0;
+			uint64_t and_hash = 0;
 			//for (auto m : types)
 			for (int i = 0; i < count; i++)
 			{
