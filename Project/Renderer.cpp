@@ -43,7 +43,6 @@ bool Renderer::initialize()
 		return false;
 	}
 
-	return true;
 	mRenderer = SDL_CreateRenderer(
 		mWindow, // Window to create renderer for
 		/*
@@ -66,6 +65,8 @@ bool Renderer::initialize()
 		SDL_Log("Failed to create renderer: %s", SDL_GetError());
 		return false;
 	}
+
+	return true;
 }
 
 void Renderer::finalize()

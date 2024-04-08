@@ -19,6 +19,11 @@ SDL_Texture* TextureAssetManager::loadTexture(const std::string& relativePath)
 		// Image 를 load 하여 SDL_Surface 안에 담는다.
 		tex = TextureLoader::LoadTexture(relativePath);
 
+		
+	}
+
+	if (tex)
+	{
 		mTextures.emplace(relativePath.c_str(), tex);
 	}
 

@@ -26,7 +26,7 @@
 #include "TransformECSComponent.h"
 #include "SpriteECSComponent.h"
 
-#define USE_ECS 1
+// #define USE_ECS 1
 
 const int entityNum = 10000;
 const int thickness = 15;
@@ -93,11 +93,14 @@ void Game::RunLoop()
 	{
 		auto start = std::chrono::steady_clock::now();
 		ProcessInput();
+		auto start_time = std::chrono::high_resolution_clock::now();
 		UpdateGame();
-		GenerateOutput();
 
-		auto end = std::chrono::steady_clock::now();
-		std::chrono::duration<double, std::milli> elapsed_time = end - start;
+		auto end_time = std::chrono::high_resolution_clock::now();
+		// Calculate elapsed time in milliseconds
+		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+
+		GenerateOutput();
 		bool h = true;
 	}
 }
