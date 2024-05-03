@@ -10,14 +10,15 @@ Asset::~Asset()
 
 BaseObject* Asset::GetData()
 {
-	return nullptr;
+	return prototype;
 }
 
 void Asset::SetPrototype(BaseObject* prototype)
 {
+	prototype = prototype;
 }
 
 BaseObject* Asset::GetPrototype()
 {
-	return nullptr;
+	return prototype;
 }

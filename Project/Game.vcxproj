@@ -36,6 +36,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FileId.cpp" />
     <ClCompile Include="Guid.cpp" />
+    <ClCompile Include="ImageAsset.cpp" />
+    <ClCompile Include="ImageAssetLoader.cpp" />
     <ClCompile Include="InputECSComponent.cpp" />
     <ClCompile Include="ProjectLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -58,6 +60,7 @@
     <ClCompile Include="TextureAssetManager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="TransformECSComponent.cpp" />
+    <ClCompile Include="Uuid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -78,6 +81,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="FileId.h" />
     <ClInclude Include="Guid.h" />
+    <ClInclude Include="ImageAsset.h" />
+    <ClInclude Include="ImageAssetLoader.h" />
     <ClInclude Include="InputECSComponent.h" />
     <ClInclude Include="ProjectLoader.h" />
     <ClInclude Include="Renderer.h" />
@@ -99,6 +104,7 @@
     <ClInclude Include="TextureAssetManager.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="TransformECSComponent.h" />
+    <ClInclude Include="Uuid.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC508D87-495F-4554-932D-DD68388B63CC}</ProjectGuid>

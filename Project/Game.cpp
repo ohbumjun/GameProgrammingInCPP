@@ -22,10 +22,10 @@
 #include <chrono>
 
 
-#define USE_ECS 1
+// #define USE_ECS 1
 
-// const int entityNum = 100000;
-const int entityNum = 1;
+const int entityNum = 1000000; // 100¸¸°³
+// const int entityNum = 1;
 const int thickness = 15;
 const float paddleH = 100.0f;
 

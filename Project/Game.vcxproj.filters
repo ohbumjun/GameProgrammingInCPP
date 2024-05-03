@@ -145,6 +145,15 @@
     <ClCompile Include="InputECSComponent.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="ImageAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageAssetLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Uuid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -258,5 +267,8 @@
     <ClInclude Include="InputECSComponent.h">
       <Filter>Source Files\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="ImageAsset.h" />
+    <ClInclude Include="ImageAssetLoader.h" />
+    <ClInclude Include="Uuid.h" />
   </ItemGroup>
 </Project>
