@@ -42,6 +42,15 @@ public :
 private :
 	BaseObject* prototype;
 	AssetType assetType;
+	/**
+	*Asset 의 size
+	*/
+	uint64_t size;
+
+	/**
+	*해당 Asset의 info (Unity로 치면 meta file). asset resource의 외부적으로 저장해야하는 값이나 check sum값등을 들고있다.
+	*/
+	class AssetInfo* info;
 	// guid
 	// fileId
 };

@@ -109,17 +109,8 @@
     <ClCompile Include="SpookyHash.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="AssetExtension.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AssetAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Prototype</Filter>
-    </ClCompile>
-    <ClCompile Include="AssetLoader.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProjectLoader.cpp">
       <Filter>Source Files</Filter>
@@ -145,13 +136,28 @@
     <ClCompile Include="InputECSComponent.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="ImageAsset.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Uuid.cpp">
+      <Filter>Source Files\Identifier</Filter>
     </ClCompile>
     <ClCompile Include="ImageAssetLoader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="Uuid.cpp">
+    <ClCompile Include="ImageAsset.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetAttribute.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetExtension.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageAssetInfo.cpp">
+      <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -267,8 +273,18 @@
     <ClInclude Include="InputECSComponent.h">
       <Filter>Source Files\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="ImageAsset.h" />
-    <ClInclude Include="ImageAssetLoader.h" />
-    <ClInclude Include="Uuid.h" />
+    <ClInclude Include="Uuid.h">
+      <Filter>Source Files\Identifier</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageAsset.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageAssetLoader.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageAssetInfo.h">
+      <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetInfo.h" />
   </ItemGroup>
 </Project>
