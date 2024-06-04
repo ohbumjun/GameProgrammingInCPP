@@ -1,16 +1,35 @@
 #include "AssetExtension.h"
 #include "SpriteAsset.h"
 #include "Sprite.h"
+#include <filesystem>
 
-std::unordered_map<size_t, AssetAttribute*> AssetExtension::_attributies;
+std::unordered_map<std::string, AssetType> AssetExtension::_extensionMap;
+
+AssetType AssetExtension::GetAssetTypeByExtension(const std::string& assetPath)
+{
+	std::filesystem::path path(assetPath);
+
+	// Get the extension using the path object's member function
+	const std::string& pathExt = path.extension().string();
+
+	if (_extensionMap.find(pathExt) != _extensionMap.end())
+	{
+		return _extensionMap[pathExt];
+	}
+
+	return AssetType::UNKNOWN;
+}
 
 void AssetExtension::initialize()
 {
-	size_t spritePrototype = typeid(Sprite).hash_code();
-	AssetAttribute* imageAssetAttribute = new AssetAttribute (AssetType::IMAGE, spritePrototype, spritePrototype,
-		".png");
-	_attributies[spritePrototype] = imageAssetAttribute;
-	/*
+	// size_t spritePrototype = typeid(Sprite).hash_code();
+	// AssetAttribute* imageAssetAttribute = new AssetAttribute (AssetType::IMAGE, spritePrototype, spritePrototype,
+	// 	".png");
+	// _attributies[spritePrototype] = imageAssetAttribute;
+
+	_extensionMap[".png"] = AssetType::IMAGE;
+
+	/* (추천 코드)
 	// Load the asset extension
 	if (!assetExtension.LoadFromFile("Data/Extensions/AssetExtension.xml"))
 	{
@@ -56,9 +75,4 @@ void AssetExtension::initialize()
 
 void AssetExtension::finalize()
 {
-	for (auto& attribute : _attributies)
-	{
-		delete attribute.second;
-	}
-	_attributies.clear();
 }

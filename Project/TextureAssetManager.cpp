@@ -1,5 +1,5 @@
 #include "TextureAssetManager.h"
-#include "TextureLoader.h"
+#include "TextureAssetProcessor.h"
 #include "SDL/SDL_image.h"
 
 std::unordered_map<std::string, SDL_Texture*> TextureAssetManager::mTextures;
@@ -17,7 +17,7 @@ SDL_Texture* TextureAssetManager::loadTexture(const std::string& relativePath)
 	{
 		// Load from file
 		// Image 를 load 하여 SDL_Surface 안에 담는다.
-		tex = TextureLoader::LoadTexture(relativePath);
+		tex = TextureAssetProcessor::LoadTexture(relativePath);
 
 		
 	}

@@ -24,7 +24,7 @@
     <ClCompile Include="AssetAttribute.cpp" />
     <ClCompile Include="AssetExtension.cpp" />
     <ClCompile Include="AssetInfo.cpp" />
-    <ClCompile Include="AssetLoader.cpp" />
+    <ClCompile Include="AssetProcessor.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="BaseObject.cpp" />
@@ -34,6 +34,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ECSComponent.cpp" />
     <ClCompile Include="ECSWorld.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="FileId.cpp" />
     <ClCompile Include="Guid.cpp" />
@@ -55,12 +56,12 @@
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="SpookyHash.cpp" />
     <ClCompile Include="SpriteAsset.cpp" />
-    <ClCompile Include="SpriteAssetLoader.cpp" />
+    <ClCompile Include="SpriteAssetProcessor.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SpriteECSComponent.cpp" />
     <ClCompile Include="StateECSComponent.cpp" />
     <ClCompile Include="TextureAssetManager.cpp" />
-    <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="TextureAssetProcessor.cpp" />
     <ClCompile Include="TransformECSComponent.cpp" />
     <ClCompile Include="Uuid.cpp" />
   </ItemGroup>
@@ -70,7 +71,7 @@
     <ClInclude Include="AssetAttribute.h" />
     <ClInclude Include="AssetExtension.h" />
     <ClInclude Include="AssetInfo.h" />
-    <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="AssetProcessor.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="BaseObject.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ECSComponent.h" />
     <ClInclude Include="ECSWorld.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FileId.h" />
     <ClInclude Include="Guid.h" />
@@ -101,12 +103,12 @@
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SpookyHash.h" />
     <ClInclude Include="SpriteAsset.h" />
-    <ClInclude Include="SpriteAssetLoader.h" />
+    <ClInclude Include="SpriteAssetProcessor.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SpriteECSComponent.h" />
     <ClInclude Include="StateECSComponent.h" />
     <ClInclude Include="TextureAssetManager.h" />
-    <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="TextureAssetProcessor.h" />
     <ClInclude Include="TransformECSComponent.h" />
     <ClInclude Include="Uuid.h" />
   </ItemGroup>

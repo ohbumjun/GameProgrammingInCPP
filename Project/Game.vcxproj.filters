@@ -26,6 +26,15 @@
     <Filter Include="Source Files\Prototype">
       <UniqueIdentifier>{75f5b15a-7a07-44ff-a916-3dee30f3224d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FileSystem">
+      <UniqueIdentifier>{411a86ee-83d5-472d-8d91-9e13e8285311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Asset\Image">
+      <UniqueIdentifier>{ea86021d-507f-4401-b886-c4faa50fdf2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Asset\Sprite">
+      <UniqueIdentifier>{9b0d7bbe-7376-4f48-b3a6-7e4d45cd33e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -121,29 +130,11 @@
     <ClCompile Include="CircleECSComponent.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteAsset.cpp">
-      <Filter>Source Files\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteAssetLoader.cpp">
-      <Filter>Source Files\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureAssetManager.cpp">
-      <Filter>Source Files\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureLoader.cpp">
-      <Filter>Source Files\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="InputECSComponent.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Uuid.cpp">
       <Filter>Source Files\Identifier</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageAssetLoader.cpp">
-      <Filter>Source Files\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageAsset.cpp">
-      <Filter>Source Files\Asset</Filter>
     </ClCompile>
     <ClCompile Include="AssetAttribute.cpp">
       <Filter>Source Files\Asset</Filter>
@@ -151,14 +142,35 @@
     <ClCompile Include="AssetExtension.cpp">
       <Filter>Source Files\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="AssetLoader.cpp">
+    <ClCompile Include="AssetProcessor.cpp">
       <Filter>Source Files\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageAsset.cpp">
+      <Filter>Source Files\Asset\Image</Filter>
     </ClCompile>
     <ClCompile Include="ImageAssetInfo.cpp">
-      <Filter>Source Files\Asset</Filter>
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageAssetLoader.cpp">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAsset.cpp">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAssetProcessor.cpp">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAssetManager.cpp">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAssetProcessor.cpp">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files\FileSystem</Filter>
     </ClCompile>
     <ClCompile Include="AssetInfo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Asset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,7 +261,7 @@
     <ClInclude Include="CircleECSComponent.h">
       <Filter>Source Files\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="AssetLoader.h">
+    <ClInclude Include="AssetProcessor.h">
       <Filter>Source Files\Asset</Filter>
     </ClInclude>
     <ClInclude Include="AssetAttribute.h">
@@ -258,33 +270,38 @@
     <ClInclude Include="AssetExtension.h">
       <Filter>Source Files\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteAsset.h">
-      <Filter>Source Files\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteAssetLoader.h">
-      <Filter>Source Files\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureAssetManager.h">
-      <Filter>Source Files\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureLoader.h">
-      <Filter>Source Files\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="InputECSComponent.h">
       <Filter>Source Files\ECS</Filter>
     </ClInclude>
     <ClInclude Include="Uuid.h">
       <Filter>Source Files\Identifier</Filter>
     </ClInclude>
-    <ClInclude Include="ImageAsset.h">
-      <Filter>Source Files\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="ImageAssetLoader.h">
-      <Filter>Source Files\Asset</Filter>
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageAsset.h">
+      <Filter>Source Files\Asset\Image</Filter>
     </ClInclude>
     <ClInclude Include="ImageAssetInfo.h">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAsset.h">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAssetProcessor.h">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureAssetManager.h">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureAssetProcessor.h">
+      <Filter>Source Files\Asset\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Source Files\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetInfo.h">
       <Filter>Source Files\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="AssetInfo.h" />
   </ItemGroup>
 </Project>

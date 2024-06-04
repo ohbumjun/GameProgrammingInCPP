@@ -1,7 +1,7 @@
-#include "TextureLoader.h"
+#include "TextureAssetProcessor.h"
 #include "Renderer.h"
 
-SDL_Texture* TextureLoader::LoadTexture(const std::string& relativePath)
+SDL_Texture* TextureAssetProcessor::LoadTexture(const std::string& relativePath)
 {
 	SDL_Texture* tex = nullptr;
 	
