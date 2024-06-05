@@ -11,7 +11,7 @@
 int main(int argc, char** argv)
 {
 	Game game;
-	bool success = game.Initialize();
+	bool success = game.Initialize(argv[0]);
 	if (success)
 	{
 		game.RunLoop();

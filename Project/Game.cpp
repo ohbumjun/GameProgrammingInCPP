@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "SDL/SDL_image.h"
 #include "AssetManager.h"
+#include "FileManager.h"
 #include "ProjectLoader.h"
 #include "Renderer.h"
 
@@ -37,7 +38,7 @@ Game::Game()
 	
 }
 
-bool Game::Initialize()
+bool Game::Initialize(char* projectPath)
 {
 	// Initialize SDL
 	int sdlResult = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -46,7 +47,6 @@ bool Game::Initialize()
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 		return false;
 	}
-	
 
 	/*
 	2D Game 만 만든다고 가정하면 SDL 에서 image file 을 load 할 때 사용하는 SDL Image 를
@@ -66,6 +66,8 @@ bool Game::Initialize()
 	Renderer::initialize();
 
 	Random::Init();
+
+	FileManager::Initialize(projectPath);
 
 	AssetManager::initialize();
 

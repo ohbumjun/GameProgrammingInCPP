@@ -9,7 +9,7 @@ bool AssetProcessor::CanRecord(const std::string& resourcePath)
     return false;
 }
 
-Asset* AssetProcessor::CreateAsset(const Uuid& uuid, const std::string& resourcePath, bool isBuiltIn)
+Asset* AssetProcessor::CreateAsset(const FileId& fileId, const std::string& relativResourcePath, bool isBuiltIn)
 {
     return nullptr;
 }

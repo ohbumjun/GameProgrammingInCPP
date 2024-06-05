@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Uuid.h"
 #include "BaseObject.h"
 #include <cstdint>
 
@@ -29,7 +30,7 @@ enum class AssetType : char
 	MATERIAL,
 	FBX
 };
-class Asset
+class Asset : public BaseObject
 {	
 public :
 
@@ -53,5 +54,7 @@ private :
 	class AssetInfo* info;
 	// guid
 	// fileId
+
+	Uuid uuid;
 };
 

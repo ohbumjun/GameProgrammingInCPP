@@ -24,6 +24,7 @@ public:
 
 	FileId() = default;
 	// 여기 기본 생성자로 들어오면 안되는데
+	FileId(const FileId& FileId);
 	FileId(const std::string& relativePath);
 	~FileId() = default;
 

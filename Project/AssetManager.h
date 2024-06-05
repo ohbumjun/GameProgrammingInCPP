@@ -25,6 +25,8 @@ public :
 
 	static Asset* CreateAsset(AssetType type, const std::string& path);
 
+	static std::string GetAbsoluteResourcePath(const std::string& relativeResourcePath);
+
 private :
 	static void initialize();
 	static void initializeProcessors();
@@ -32,5 +34,6 @@ private :
 	static void createAsset();
 
 	static std::unordered_map<AssetType, AssetProcessor*> _loaders;
+	static std::unordered_map<std::string/*Resources/~~ 라는 상대경로 ?*/, Asset*> _assets;
 };
 

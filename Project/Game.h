@@ -27,7 +27,7 @@ class Game
 public:
 	Game();
 	// Initialize the game
-	bool Initialize();
+	bool Initialize(char* projectPath);
 	// Runs the game loop until the game is over
 	void RunLoop();
 	// Shutdown the game

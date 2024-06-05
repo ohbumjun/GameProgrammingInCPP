@@ -35,6 +35,9 @@
     <Filter Include="Source Files\Asset\Sprite">
       <UniqueIdentifier>{9b0d7bbe-7376-4f48-b3a6-7e4d45cd33e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Context">
+      <UniqueIdentifier>{6e44718d-bd6d-44ce-8c31-9c197635156c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -172,6 +175,18 @@
     <ClCompile Include="AssetInfo.cpp">
       <Filter>Source Files\Asset</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageAssetProcessor.cpp">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorContext.cpp">
+      <Filter>Source Files\Context</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Source Files\FileSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -302,6 +317,18 @@
     </ClInclude>
     <ClInclude Include="AssetInfo.h">
       <Filter>Source Files\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageAssetProcessor.h">
+      <Filter>Source Files\Asset\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorContext.h">
+      <Filter>Source Files\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Source Files\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

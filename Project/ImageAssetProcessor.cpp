@@ -1,13 +1,13 @@
-#include "SpriteAssetProcessor.h"
+#include "ImageAssetProcessor.h"
 #include "Filesystem.h"
-#include "SpriteAsset.h"
+#include "ImageAsset.h"
 
-Asset* SpriteAssetProcessor::CreateAsset(const FileId& uuid, const std::string& resourcePath, bool isBuiltIn)
+Asset* ImageAssetProcessor::CreateAsset(const FileId& uuid, const std::string& resourcePath, bool isBuiltIn)
 {
 	const std::string& name = FileSystem::GetPathName(resourcePath.c_str());
 
 	// SpriteAsset* asset = &LvObject::Instantiate<LvMaterialAsset, const LvUuid&, const LvString&>(name, uuid, resourcePath, isBuiltIn);
-	SpriteAsset* asset = new SpriteAsset();
+	ImageAsset* asset = new ImageAsset();
 
 	// writeVersion(asset);
 

@@ -2,7 +2,7 @@
 
 #include "AssetProcessor.h"
 
-class SpriteAssetProcessor : public AssetProcessor
+class ImageAssetProcessor : public AssetProcessor
 {
 public:
 	// virtual Asset* CreateAsset(const Uuid& uuid, const std::string& resourcePath, bool isBuiltIn = false);
