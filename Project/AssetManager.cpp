@@ -7,6 +7,7 @@
 #include "FileManager.h"
 
 std::unordered_map<AssetType, AssetProcessor*> AssetManager::_loaders;
+std::unordered_map<std::string/*Resources/~~ 라는 상대경로 ?*/, Asset*> AssetManager::_assets;
 
 void AssetManager::initializeProcessors()
 {
@@ -41,6 +42,14 @@ void AssetManager::Finalize()
 	TextureAssetManager::finalize();
 
 	// 각 type 별로 Asset Record 객체도 해제해준다.
+
+	for (const auto& assetInfo : _assets)
+	{
+		Asset* asset = assetInfo.second;
+		DeleteAsset(asset);
+	}
+
+	_assets.clear();
 }
 
 void AssetManager::CreateAsset()
@@ -55,6 +64,16 @@ SDL_Texture* AssetManager::LoadTexture(const std::string& relativePath)
 SDL_Texture* AssetManager::GetTexture(const std::string& fileName)
 {
 	return TextureAssetManager::getTexture(fileName);
+}
+
+void AssetManager::DeleteAsset(Asset* asset)
+{
+	AssetType assetType = asset->GetAssetType();
+	AssetProcessor* assetProcessor = _loaders[assetType];
+	assetProcessor->DestroyAsset(asset);
+
+	// 이 부분에 동기화를 진행해줘야 한다.
+	_assets.erase(asset->GetResourcePath());
 }
 
 Asset* AssetManager::CreateAsset(AssetType type, const std::string& path)
@@ -93,6 +112,11 @@ void AssetManager::LoadAsset(const std::string& relativePath)
 	// (여기서부터는 나의 의지..?) 그리고 실제 prototype load 도 수행하기.
 	Asset* asset = nullptr;
 
+	if (_assets.find(relativePath) == _assets.end())
+	{
+		asset = _assets[relativePath];
+	}
+
 	// 원래대로라면 Asset Info 도 따로 만들고, 최초로 만들어준 file id 및 guid 도
 	// 해당 info 파일에 넣어줘야 한다.
 	// 하지만 현재는 일단 빠르게 개발하기 위해 해당 단계는 건너뛴다.
@@ -105,40 +129,49 @@ void AssetManager::LoadAsset(const std::string& relativePath)
 		// info 다시쓰고 ?
 
 		asset = assetProcessor->CreateAsset(fileId, relativePath);
-		assetProcessor->onCreate();
+		asset->onCreate();
 	}
 
-	const std::string resAbaPath = GetAbsoluteResourcePath(relativePath);
+	const std::string resAbsPath = GetAbsoluteResourcePath(relativePath);
 
-	//if (needImport)
-	//{
-	//	const LvString resAbsPath = GetAbsoluteResourcePath(mainAsset->uuid.GetGuid());
-	//	const LvString cacheAbsPath = GetAbsoluteCachePath(mainAsset);
+	/*
+	LvHashtable<uint64, LvAssetReference> assetDependencies;
+	LvMemoryStream<> contentStream;
+	{
+		LvOutputStream contentOutputStream(&contentStream);
+		Engine::LvBinaryTypedArchive contentArchive(contentOutputStream);
+		const bool isSucceed = onImport(asset, resAbsolutePath, contentArchive, assetDependencies);
+		contentArchive.Flush();
+		if (isSucceed == false) return;
+	}
 
-	//	record->Import(*mainAsset, resAbsPath, cacheAbsPath);
-	//	record->UpdateInfo(mainAsset);
+	updateHeader(asset, resAbsolutePath);
 
-	//	if (mainAsset->IsLoaded())
-	//	{
-	//		lv_atomic_set(&LvAssetDatabase::_pendingAssetLock, 1);
+	for (const auto& each : assetDependencies)
+	{
+		Editor::LvAsset::Header::Dependency def;
+		def.id = each.value.id;
+		def.name = each.value.GetName();
+		def.type = each.value.GetDependenceType();
+		def.refCount = each.value.Count();
+		def.uuid = each.value.GetUuid().ToString();
 
-	//		// 로드가 된 상태에서 파일이 변경된 경우에 header 갱신, SubAsset갱신, Prototype갱신이 이루어져야한다.(서브에셋의 prototype도 포함)
-	//		_PendingReloadAssets.Enqueue(mainAsset);
+		asset.header.dependencies.Add(def.id, std::move(def));
+	}
 
-	//		lv_atomic_set(&LvAssetDatabase::_pendingAssetLock, 0);
-	//	}
-	//	else
-	//	{
-	//		mainAsset->preload();
-	//	}
-	//}
-	//else
-	//{
-	//	if (mainAsset->HasCache() && !mainAsset->IsLoaded())
-	//	{
-	//		mainAsset->preload();
-	//	}
-	//}
+	LvMemoryStream<> stream;
+	LvOutputStream os(&stream);
+
+	asset.header.Write(os, contentStream.Length());
+
+	contentStream.SetPosition(0);
+	os.stream->WriteRaw(contentStream.GetMemory(), contentStream.Length());
+
+	LvFileStream fileStream(cacheAbsolutePath.c_str(), LvFileMode::CREATE);
+	fileStream.WriteRaw(stream.GetMemory(), stream.GetPosition());
+	fileStream.Flush();
+	fileStream.Close();
+	*/
 }
 
 void AssetManager::ImportAsset(const std::string& relativePath)

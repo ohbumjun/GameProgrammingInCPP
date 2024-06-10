@@ -32,6 +32,7 @@ enum class AssetType : char
 };
 class Asset : public BaseObject
 {	
+	friend class AssetManager;
 public :
 	Asset(const FileId& fileId, const std::string& resourcePath, AssetType type);
 	~Asset();
@@ -39,6 +40,10 @@ public :
 	BaseObject* GetData();
 	void SetPrototype(BaseObject* prototype);
 	BaseObject* GetPrototype();
+	const std::string& GetResourcePath() { return resourcePath; }
+	AssetType GetAssetType() {return assetType; }
+protected :
+	virtual void onCreate() {};
 private :
 	BaseObject* prototype;
 	AssetType assetType;

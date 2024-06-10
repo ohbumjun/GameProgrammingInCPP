@@ -5,7 +5,9 @@
 
 class Image : public BaseObject
 {
+public :
+	Image(SDL_Texture* tex) : _tex(tex) {};
 private:
-	SDL_Texture* tex = nullptr;
+	SDL_Texture* _tex = nullptr;
 };
 

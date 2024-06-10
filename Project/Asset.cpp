@@ -1,6 +1,7 @@
 #include "Asset.h"
 #include "FileId.h"
 
+
 Asset::Asset(const FileId& fileId, const std::string& resourcePath, AssetType type) :
 	fileId(fileId), resourcePath(resourcePath), assetType(type), prototype(nullptr)
 {
