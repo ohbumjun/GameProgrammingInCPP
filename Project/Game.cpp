@@ -63,15 +63,18 @@ bool Game::Initialize(char* projectPath)
 		return false;
 	}
 
-	Renderer::initialize();
+	Renderer::Initialize();
 
 	Random::Init();
 
 	FileManager::Initialize(projectPath);
 
-	AssetManager::initialize();
+	AssetManager::Initialize();
 
 	ProjectLoader::LoadProject("");
+
+	// 여기서 Resource 파일에 있는 모든 파일을 로드한 다음. Cache 로 만들어둔다.
+	AssetManager::PrepareAssets();
 
 #ifdef USE_ECS
 	TestECS();
@@ -233,7 +236,7 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-	Renderer::preRender();
+	Renderer::PreRender();
 	
 #ifdef USE_ECS
 	// aestroid
@@ -264,7 +267,7 @@ void Game::GenerateOutput()
 
 	
 
-	Renderer::postRender();
+	Renderer::PostRender();
 }
 
 void Game::LoadData()
@@ -291,7 +294,7 @@ void Game::UnloadData()
 		delete mActors.back();
 	}
 
-	AssetManager::finalize();
+	AssetManager::Finalize();
 }
 
 void Game::TestECS()
@@ -355,7 +358,7 @@ void Game::Shutdown()
 {
 	UnloadData();
 	IMG_Quit();
-	Renderer::finalize();
+	Renderer::Finalize();
 	SDL_Quit();
 }
 

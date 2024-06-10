@@ -46,21 +46,20 @@ public:
 		memcpy(&hash1, &_bytes[0], sizeof(unsigned char) * 4);
 		return hash1;
 	}
-
-	inline uint64 GetHash64() const
-	{
-		uint64 hash2 = 0;
-		memcpy(&hash2, &_bytes[4], sizeof(unsigned char) * 8);
-		return hash2;
-	}
-	inline Hash96 GetHash96() const
-	{
-		Hash96 r;
-		r.hash1 = GetHash32();
-		r.hash2 = GetHash64();
-
-		return r;
-	}
+	// inline uint64 GetHash64() const
+	// {
+	// 	uint64 hash2 = 0;
+	// 	memcpy(&hash2, &_bytes[4], sizeof(unsigned char) * 8);
+	// 	return hash2;
+	// }
+	// inline Hash96 GetHash96() const
+	// {
+	// 	Hash96 r;
+	// 	r.hash1 = GetHash32();
+	// 	r.hash2 = GetHash64();
+	// 
+	// 	return r;
+	// }
 private:
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uuid.h"
+#include "FileId.h"
 #include "BaseObject.h"
 #include <cstdint>
 
@@ -33,8 +33,7 @@ enum class AssetType : char
 class Asset : public BaseObject
 {	
 public :
-
-	Asset();
+	Asset(const FileId& fileId, const std::string& resourcePath, AssetType type);
 	~Asset();
 
 	BaseObject* GetData();
@@ -43,6 +42,8 @@ public :
 private :
 	BaseObject* prototype;
 	AssetType assetType;
+	std::string resourcePath;
+	FileId fileId;
 	/**
 	*Asset ÀÇ size
 	*/
@@ -54,7 +55,5 @@ private :
 	class AssetInfo* info;
 	// guid
 	// fileId
-
-	Uuid uuid;
 };
 

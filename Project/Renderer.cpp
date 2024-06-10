@@ -3,7 +3,7 @@
 SDL_Renderer* Renderer::mRenderer = nullptr;
 SDL_Window* Renderer::mWindow = nullptr;
 
-bool Renderer::initialize()
+bool Renderer::Initialize()
 {
 	
 	// Create SDL renderer
@@ -69,7 +69,7 @@ bool Renderer::initialize()
 	return true;
 }
 
-void Renderer::finalize()
+void Renderer::Finalize()
 {
 	SDL_DestroyWindow(mWindow);
 	SDL_DestroyRenderer(mRenderer);
@@ -85,13 +85,13 @@ SDL_Window* Renderer::GetWindow()
 	return mWindow;
 }
 
-void Renderer::postRender()
+void Renderer::PostRender()
 {
 	// 끝점 : Front 와 Back Buffer 를 Swap 한다.
 	SDL_RenderPresent(mRenderer);
 }
 
-void Renderer::preRender()
+void Renderer::PreRender()
 {
 	// Basic 2D Graphic
 	/*

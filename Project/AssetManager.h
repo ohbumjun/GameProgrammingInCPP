@@ -16,8 +16,14 @@ class AssetManager
 	// 그리고 그 guid 를 key 로 하여, Asset 들을 관리한다.
 	// static GuidManager* guidManager;
 public :
+	// 미리 필요한 모든 asset 파일들을 Load 하고, Cache 파일로 저장하는 함수
 	static void LoadAsset(const std::string& relativePath);
 	static void ImportAsset(const std::string& relativePath);
+	static void PrepareAssets();
+	static void Initialize();
+	static void Finalize();
+	static void CreateAsset();
+
 	
 	// Texture
 	static SDL_Texture* LoadTexture(const std::string& relativePath);
@@ -26,13 +32,10 @@ public :
 	static Asset* CreateAsset(AssetType type, const std::string& path);
 
 	static std::string GetAbsoluteResourcePath(const std::string& relativeResourcePath);
-
 private :
-	static void initialize();
+	
 	static void initializeProcessors();
-	static void finalize();
-	static void createAsset();
-
+	
 	static std::unordered_map<AssetType, AssetProcessor*> _loaders;
 	static std::unordered_map<std::string/*Resources/~~ 라는 상대경로 ?*/, Asset*> _assets;
 };

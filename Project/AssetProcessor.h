@@ -22,28 +22,26 @@ protected:
 	* - 그리고 전체 관리 Table 에 추가하는 함수도 별도로 뚫어두기
 	*/
 	virtual void Import(Asset& asset, const std::string& resAbsolutePath, const std::string& cacheAbsolutePath);
-
 	
 	virtual bool CanRecord(const std::string& resourcePath);
 
+	virtual void WriteResourceFile(Asset& asset) = 0;
+	
+	virtual void WriteCacheFile(Asset& asset) = 0;
+	
+	virtual void WriteInfoFile(Asset* asset) {};
+
+	// Asset 생성 + Cache 에도 저장 ?
+	// virtual void Import(Asset& asset, const std::string& resAbsolutePath, const std::string& cacheAbsolutePath);
+	
+	// 일단, Resource 파일에서 불러오는 형태.
+	// cache 는 별도 함수로 Load 하는 것도 좋을 것 같다.
+	virtual void ImportResource(Asset& asset, const std::string& resAbsolutePath);
 	
 	// virtual Asset* CreateAsset(const Uuid& uuid, const std::string& resourcePath, bool isBuiltIn = false) = 0;
 	virtual Asset* CreateAsset(const FileId& uuid, const std::string& relativResourcePath, bool isBuiltIn = false) = 0;
 
-	// /**
-	// * @brief reosurce 파일을 씁니다.
-	// */
-	// virtual void WriteResourceFile(Asset& asset) = 0;
-	// 
-	// /**
-	// * @brief asset 의 cache 파일을 씁니다.
-	// */
-	// virtual void WriteCacheFile(Asset& asset) = 0;
-	// 
-	// /**
-	// * @brief info에 있는 데이터를 어딘가에 셋팅 해줄 필요가 있다면 사용.
-	// */
-	// virtual void WriteInfo(Asset* asset);
+	virtual void onImport() {};
 
 	AssetType m_AssetType;
 };

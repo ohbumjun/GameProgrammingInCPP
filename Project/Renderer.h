@@ -9,11 +9,11 @@ public :
 private :
 	friend class Game;
 
-	static bool initialize();
-	static void finalize();
+	static bool Initialize();
+	static void Finalize();
 
-	static void postRender();
-	static void preRender();
+	static void PostRender();
+	static void PreRender();
 
 	// Renderer for 2D drawing
 	static SDL_Renderer* mRenderer;
