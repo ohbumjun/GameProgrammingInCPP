@@ -3,7 +3,7 @@
 
 
 Asset::Asset(const FileId& fileId, const std::string& resourcePath, AssetType type) :
-	fileId(fileId), resourcePath(resourcePath), assetType(type), prototype(nullptr)
+	fileId(fileId), resourcePath(resourcePath), assetType(type), _prototype(nullptr)
 {
 }
 
@@ -13,15 +13,15 @@ Asset::~Asset()
 
 BaseObject* Asset::GetData()
 {
-	return prototype;
+	return _prototype;
 }
 
 void Asset::SetPrototype(BaseObject* prototype)
 {
-	prototype = prototype;
+	_prototype = prototype;
 }
 
 BaseObject* Asset::GetPrototype()
 {
-	return prototype;
+	return _prototype;
 }

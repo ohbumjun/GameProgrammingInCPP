@@ -10,6 +10,9 @@
 #include "SpriteComponent.h"
 #include "InputComponent.h"
 #include "Laser.h"
+#include "Image.h"
+#include "ImageAsset.h"
+#include "SDL/SDL_image.h"
 #include "AssetManager.h"
 
 Ship::Ship(Game* game)
@@ -18,7 +21,12 @@ Ship::Ship(Game* game)
 {
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this, 150);
-	sc->SetTexture(AssetManager::GetTexture("Assets/Ship.png"));
+
+	Asset* shipAsset = AssetManager::GetAssetByPath("Assets/Ship.png");
+	ImageAsset* shipTextureAsset = static_cast<ImageAsset*>(shipAsset);
+	Image* shipTexture = static_cast<Image*>(shipTextureAsset->GetData());
+	SDL_Texture* sdlTexture = shipTexture->GetTexture();
+	sc->SetTexture(sdlTexture);
 
 	// Create an input component and set keys/speed
 	InputComponent* ic = new InputComponent(this);

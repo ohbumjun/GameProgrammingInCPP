@@ -13,6 +13,9 @@
 #include "Random.h"
 #include "CircleComponent.h"
 #include "AssetManager.h"
+#include "Image.h"
+#include "ImageAsset.h"
+#include "SDL/SDL_image.h"
 
 Asteroid::Asteroid(Game* game)
 	:Actor(game)
@@ -27,7 +30,12 @@ Asteroid::Asteroid(Game* game)
 
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this);
-	sc->SetTexture(AssetManager::GetTexture("Assets/Asteroid.png"));
+
+	Asset* asteroidAsset = AssetManager::GetAssetByPath("Assets/Asteroid.png");
+	ImageAsset* asteroidTextureAsset = static_cast<ImageAsset*>(asteroidAsset);
+	Image* aesteroidTexture = static_cast<Image*>(asteroidTextureAsset->GetData());
+	SDL_Texture* aesteroidSDLTexture = aesteroidTexture->GetTexture();
+	sc->SetTexture(aesteroidSDLTexture);
 
 	// Create a move component, and set a forward speed
 	MoveComponent* mc = new MoveComponent(this);

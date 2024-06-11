@@ -18,6 +18,13 @@ Asset* ImageAssetProcessor::CreateAsset(const FileId& fileId, const std::string&
 
 void ImageAssetProcessor::DestroyAsset(Asset* asset)
 {
+	ImageAsset* assetImage = static_cast<ImageAsset*>(asset);
+
+	Image* image = static_cast<Image*>(asset->GetPrototype());
+	
+	SDL_Texture* tex = image->GetTexture();
+
+	SDL_DestroyTexture(tex);
 }
 
 void ImageAssetProcessor::onLoad(Asset* asset, const std::string& resAbsolutePath)

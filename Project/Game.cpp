@@ -19,13 +19,16 @@
 #include "BGSpriteComponent.h"
 #include "Asteroid.h"
 #include "ECSWorld.h"
+#include "Image.h"
+#include "ImageAsset.h"
+#include "SDL/SDL_image.h"
 #include "Random.h"
 #include <chrono>
 
 
 // #define USE_ECS 1
 
-const int entityNum = 1000000; // 100만개
+const int entityNum = 10; // 100만개
 // const int entityNum = 1;
 const int thickness = 15;
 const float paddleH = 100.0f;
@@ -293,13 +296,21 @@ void Game::UnloadData()
 	{
 		delete mActors.back();
 	}
-
-	AssetManager::Finalize();
 }
 
 void Game::TestECS()
 {
 	{
+		Asset* shipAsset = AssetManager::GetAssetByPath("Assets/Ship.png");
+		ImageAsset* shipTextureAsset = dynamic_cast<ImageAsset*>(shipAsset);
+		Image* shipTexture = dynamic_cast<Image*>(shipTextureAsset->GetData());
+		SDL_Texture* shipSdlTexture = shipTexture->GetTexture();
+
+		Asset* asteroidAsset = AssetManager::GetAssetByPath("Assets/Asteroid.png");
+		ImageAsset* asteroidTextureAsset = dynamic_cast<ImageAsset*>(asteroidAsset);
+		Image* aesteroidTexture = dynamic_cast<Image*>(asteroidTextureAsset->GetData());
+		SDL_Texture* aesteroidSDLTexture = aesteroidTexture->GetTexture();
+
 		// asetroid
 		for (int i = 0; i < entityNum; i++) {
 			// 아리에서는 Aestroid 생성자에서 세팅해준 일을 진행해야 한다.
@@ -321,7 +332,7 @@ void Game::TestECS()
 			SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(et);
 			spCmp->Initialize(&mWorld, et);
 			spCmp->SetDrawOrder(100);
-			spCmp->SetTexture(AssetManager::GetTexture("Assets/Asteroid.png"));
+			spCmp->SetTexture(aesteroidSDLTexture);
 
 			// TransformECSComp + SpriteECSComponent +  CircleECSComponent
 			CircleECSComponent* circleCmp = mWorld.add_component<CircleECSComponent>(et);
@@ -345,7 +356,7 @@ void Game::TestECS()
 		SpriteECSComponent* spCmp = mWorld.add_component<SpriteECSComponent>(shipEt);
 		spCmp->Initialize(&mWorld, shipEt);
 		spCmp->SetDrawOrder(150);
-		spCmp->SetTexture(AssetManager::GetTexture("Assets/Ship.png"));
+		spCmp->SetTexture(shipSdlTexture);
 	}
 	
 }
@@ -359,6 +370,7 @@ void Game::Shutdown()
 	UnloadData();
 	IMG_Quit();
 	Renderer::Finalize();
+	AssetManager::Finalize();
 	SDL_Quit();
 }
 

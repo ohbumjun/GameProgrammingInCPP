@@ -13,6 +13,9 @@
 #include "CircleComponent.h"
 #include "Asteroid.h"
 #include "AssetManager.h"
+#include "Image.h"
+#include "ImageAsset.h"
+#include "SDL/SDL_image.h"
 
 Laser::Laser(Game* game)
 	:Actor(game)
@@ -20,7 +23,13 @@ Laser::Laser(Game* game)
 {
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this);
-	sc->SetTexture(AssetManager::GetTexture("Assets/Laser.png"));
+
+	Asset* laserAsset = AssetManager::GetAssetByPath("Assets/Laser.png");
+	ImageAsset* laserTextureAsset = static_cast<ImageAsset*>(laserAsset);
+	Image* laserTexture = static_cast<Image*>(laserTextureAsset->GetData());
+	SDL_Texture* laserSDLTexture = laserTexture->GetTexture();
+
+	sc->SetTexture(laserSDLTexture);
 
 	// Create a move component, and set a forward speed
 	MoveComponent* mc = new MoveComponent(this);

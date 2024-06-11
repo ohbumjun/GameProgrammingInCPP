@@ -45,7 +45,7 @@ public :
 protected :
 	virtual void onCreate() {};
 private :
-	BaseObject* prototype;
+	BaseObject* _prototype;
 	AssetType assetType;
 	std::string resourcePath;
 	FileId fileId;

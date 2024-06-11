@@ -46,7 +46,9 @@ void AssetManager::Finalize()
 	for (const auto& assetInfo : _assets)
 	{
 		Asset* asset = assetInfo.second;
-		DeleteAsset(asset);
+		AssetType assetType = asset->GetAssetType();
+		AssetProcessor* assetProcessor = _loaders[assetType];
+		assetProcessor->DestroyAsset(asset);
 	}
 
 	_assets.clear();
@@ -56,14 +58,24 @@ void AssetManager::CreateAsset()
 {
 }
 
-SDL_Texture* AssetManager::LoadTexture(const std::string& relativePath)
-{
-	return TextureAssetManager::loadTexture(relativePath);
-}
+// SDL_Texture* AssetManager::LoadTexture(const std::string& relativePath)
+// {
+// 	return TextureAssetManager::loadTexture(relativePath);
+// }
+// 
+// SDL_Texture* AssetManager::GetTexture(const std::string& fileName)
+// {
+// 	return TextureAssetManager::getTexture(fileName);
+// }
 
-SDL_Texture* AssetManager::GetTexture(const std::string& fileName)
+Asset* AssetManager::GetAssetByPath(const std::string& assetPath)
 {
-	return TextureAssetManager::getTexture(fileName);
+	if (_assets.find(assetPath) == _assets.end())
+	{
+		return nullptr;
+	}
+
+	return _assets[assetPath];
 }
 
 void AssetManager::DeleteAsset(Asset* asset)
@@ -112,7 +124,7 @@ void AssetManager::LoadAsset(const std::string& relativePath)
 	// (여기서부터는 나의 의지..?) 그리고 실제 prototype load 도 수행하기.
 	Asset* asset = nullptr;
 
-	if (_assets.find(relativePath) == _assets.end())
+	if (_assets.find(relativePath) != _assets.end())
 	{
 		asset = _assets[relativePath];
 	}
@@ -133,6 +145,9 @@ void AssetManager::LoadAsset(const std::string& relativePath)
 	}
 
 	const std::string resAbsPath = GetAbsoluteResourcePath(relativePath);
+	assetProcessor->onLoad(asset, resAbsPath);
+
+	_assets[relativePath] = asset;
 
 	/*
 	LvHashtable<uint64, LvAssetReference> assetDependencies;

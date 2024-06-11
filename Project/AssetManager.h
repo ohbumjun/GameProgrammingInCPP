@@ -25,9 +25,8 @@ public :
 	static void Finalize();
 	static void CreateAsset();
 
-	// Texture
-	static SDL_Texture* LoadTexture(const std::string& relativePath);
-	static SDL_Texture* GetTexture(const std::string& fileName);
+	// ex) Assets/Textures/Player.png 형태의 경로 정보가 와야 한다.
+	static Asset* GetAssetByPath(const std::string& assetPath);
 
 	static void DeleteAsset(Asset* asset);
 

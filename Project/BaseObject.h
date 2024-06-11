@@ -5,6 +5,8 @@
 class BaseObject
 {
 public :
+	virtual ~BaseObject() {}
+
 	Uuid GetUuid() const { return uuid; }
 
 protected :
