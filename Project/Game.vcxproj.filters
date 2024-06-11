@@ -38,6 +38,15 @@
     <Filter Include="Source Files\Context">
       <UniqueIdentifier>{6e44718d-bd6d-44ce-8c31-9c197635156c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{4fc5714b-3da8-4941-aed2-7309c7cf0747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty">
+      <UniqueIdentifier>{5b779a70-eab7-4ea5-b567-b109940cef5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty\include">
+      <UniqueIdentifier>{f5b38e16-38c3-4c36-b188-f0b62edd0d85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -187,6 +196,15 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>Source Files\FileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="OpenSSL.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoding.h">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -329,6 +347,12 @@
     </ClInclude>
     <ClInclude Include="FileManager.h">
       <Filter>Source Files\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenSSL.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\httplib.h">
+      <Filter>Source Files\ThirdParty</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
